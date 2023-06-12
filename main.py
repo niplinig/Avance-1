@@ -1,7 +1,7 @@
 import ply.lex as lex
 
-#Crear los tokens para la siguiente sintaxis
 
+#Algoritmo 1:
 """
 def insertion_sort(array)
     for i in 1...(array.length)  # Step 1
@@ -21,7 +21,7 @@ def insertion_sort(array)
 end
 """
 
-# Algoritmo Merge Sort
+#Algoritmo 2
 """
 def merge_sort(array)
   if array.length <= 1
@@ -77,12 +77,6 @@ def merge(array, sorted_left, sorted_right)
 end
 """
 
-#SELECT * FROM Tabla
-#SELECT campo1, campo2 from Tabla1 where campo==1
-#SELECT campo1 as cedula from Datos where provincia<>"7"
-#print(consulta)
-#DELETE FROM datos WHERE id>1000
-#print("SELECT * FROM Tabla")
 
 #Diccionario de palabras reservadas
 reserved = {
@@ -122,8 +116,8 @@ tokens = (
 		'AMPERSAND',
   'ID',
 ) + tuple(reserved.values())
- 
- #Exp Regulares para tokens de símbolos
+
+#Exp Regulares para tokens de símbolos
 t_TRIDOT = r'\.\.\.'
 t_DUODOT = r'\.\.'
 t_DOT = r'\.'
@@ -141,7 +135,7 @@ t_RPAREN  = r'\)'
 t_LESSTH = r'\<'
 t_GREATH = r'\>'
 t_AMPERSAND = r'\&'
- 
+
  #Para contabilizar nro de líneas
 def t_newline(t):
   r'\n+'
@@ -166,73 +160,105 @@ def t_COMMENT(t):
  #Presentación de errores léxicos
 def t_error(t):
   print("Componente léxico no reconocido '%s'" % t.value[0])
+  caja_resultados.insert('1.0', "Componente léxico no reconocido '%s'" % t.value[0])
   t.lexer.skip(1)
  
  #Contruir analizador
 lexer = lex.lex()
 
 #Testeando
-data = """
-def merge_sort(array)
-  if array.length <= 1
-    return array
-  end
-
-  array_size = array.length
-  middle = (array.length / 2).round
-
-  left_side = array[0...middle]
-  right_side = array[middle...array_size]
-
-  sorted_left = merge_sort(left_side)
-  sorted_right = merge_sort(right_side)
-
-  merge(array, sorted_left, sorted_right)
-
-  return array
-end
-
-def merge(array, sorted_left, sorted_right)
-  left_size = sorted_left.length
-  right_size = sorted_right.length
-
-  array_pointer = 0
-  left_pointer = 0
-  right_pointer = 0
-
-  while left_pointer < left_size && right_pointer < right_size
-    if sorted_left[left_pointer] < sorted_right[right_pointer]
-      array[array_pointer] = sorted_left[left_pointer]
-      left_pointer+=1
-    else
-      array[array_pointer] = sorted_right[right_pointer]
-      right_pointer+=1
-    end
-    array_pointer+=1
-  end
-
-  while left_pointer < left_size
-      array[array_pointer] = sorted_left[left_pointer]
-      left_pointer+=1
-      array_pointer+=1
-  end
-
-  while right_pointer < right_size
-     array[array_pointer] = sorted_right[right_pointer]
-     right_pointer+=1
-     array_pointer+=1
-  end
-
-  return array
-end
-"""
+data = """ """
  
  #Datos de entrada
-lexer.input(data)
+#lexer.input(data)
  
  # Tokenizador
-while True:
-  tok = lexer.token()
-  if not tok: 
-    break      #Rompe
-  print(tok)
+# while True:
+#   tok = lexer.token()
+#   if not tok:
+#     break      #Rompe
+#   print(tok)
+
+
+
+from tkinter import *
+
+root = Tk()
+caja_resultados= Text(root)
+caja_resultados.config(bd=0, padx=6, pady=4,font=("JetBrains Mono",12) ,
+             insertbackground='white',spacing1='4',highlightthickness=2,
+             insertborderwidth=10, background='black', fg='white',highlightbackground='#AEACAC',highlightcolor='#FFFFFF')
+caja_resultados.grid(row=1, column=4,padx=10,sticky="w", columnspan=2)
+
+
+def mostrarDatosLex():
+    contenido= caja_codigo.get(1.0, 'end-1c')
+    lexer.input(contenido)
+    texto=[]
+    for token in lexer:
+        texto.append(str(token))
+    texto= '\n'.join(texto)
+    caja_resultados.delete('1.0','end')
+    caja_resultados.insert('1.0', texto)
+
+
+def borrarDatos():
+    caja_codigo.delete("1.0","end")
+    caja_resultados.delete("1.0", "end")
+
+
+root.title("Mi editor")
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.columnconfigure(2, weight=1)
+root.columnconfigure(3, weight=1)
+root.columnconfigure(4, weight=1)
+root.rowconfigure(0, weight=1)
+root.rowconfigure(1, weight=1)
+
+
+
+#----------------------------Logo-------------------------#
+logo = PhotoImage(file="imgs/ruby.png")
+logo_label= Label(root, image=logo, bd=0)
+logo_label.grid(row=0, column=1,columnspan=1, sticky="s")
+#---------------------------------------------------------#
+
+
+resultado= Label(root, font=("JetBrains Mono",24) ,text='Resultados', fg='white', background='black')
+resultado.grid(row=0, column=4, columnspan=2)
+
+
+
+#------------------------------Editor de texto------------------------------------#
+caja_codigo = Text(root)
+caja_codigo.config(bd=0, padx=6, pady=4,font=("JetBrains Mono",12) ,
+             insertbackground='white',spacing1='4',highlightthickness=2,
+             insertborderwidth=10,background='black', fg='white',highlightbackground='#AEACAC',highlightcolor='#FFFFFF')
+caja_codigo.grid(row=1, column=0, columnspan=3,padx=10,sticky="n")
+#-----------------------------------------------------------------------------------#
+
+
+#------------------------------Resultados------------------------------------#
+
+#-----------------------------------------------------------------------------------#
+
+
+#------------------------------Boton Run-----------------------------------#
+lexico = PhotoImage(file="imgs/run.png")
+lexico_button= Button(root, relief='flat', padx=0,pady=0, command=mostrarDatosLex,image=lexico, bg='black',activeforeground='black',activebackground='black')
+lexico_button.grid(row=2, column=0, pady=10,padx=10)
+
+
+
+#------------------------------------------------------------------------------------#
+delete = PhotoImage(file="imgs/delete.png")
+delete_button= Button(root, relief='flat', padx=0, pady=0, command=borrarDatos,image=delete, bg='black',activeforeground='black',activebackground='black')
+delete_button.grid(row=2, column=2, pady=10, sticky='s')
+
+
+integrantes_label=Label(root, text='Integrantes:  ○ Nicolas Plaza  ○ Oscar Sanchez ○ Xavier Pauta',font=("JetBrains Mono",14), background='black',fg='white')
+integrantes_label.grid(row=2, column=4)
+
+root.configure(bg='black')
+root.mainloop()
