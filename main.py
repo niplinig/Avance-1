@@ -137,9 +137,9 @@ def t_newline(t):
 
 
 def t_ID(t):
-    r"[a-zA-Z_]+[a-zA-Z_0-9]*"
+    r"[a-zA-Z_]+\w*"
     t.type = reserved.get(t.value, "ID")
-    return
+    return t
 
 
 def t_STRING(t):
@@ -157,22 +157,29 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-def main():
-    print(chalk.bold.black.bg_green_bright("\nAnalizador Léxico\n"))
-    data = open("data.txt", mode="r", encoding="utf-8")
-    data_string = data.read()
-    lexer = lex.lex()
-    lexer.input(data_string)
+spp = chalk.bold.black("|")
 
-    styled_pipe = chalk.bold.black("|")
-    header_text = f"{styled_pipe} Token type {styled_pipe} Token value {styled_pipe} Line num {styled_pipe} Position {styled_pipe}"
+
+def print_title():
+    print(chalk.bold.black.bg_green_bright("\nAnalizador Léxico\n"))
+    header_text = (
+        f"{spp} Token type {spp}  Token value  {spp} Line num {spp} Position {spp}"
+    )
     print(header_text)
     print(" ", chalk.bold.black("-") * 46)
-    for tok in lexer:
-        print(
-            f"{styled_pipe}{tok.type}{' '*(12 - len(tok.type))}{styled_pipe}{tok.value}{' '*(13 - len(tok.value))}{styled_pipe}{tok.lineno}{' '*(10 - len(str(tok.lineno)))}{styled_pipe}{tok.lexpos}{' '*(10 - len(str(tok.lexpos)))}{styled_pipe}"
-        )
 
+
+def main():
+    lexer = lex.lex()  # debub = 1
+    print_title()
+    with open("data.txt", mode="r", encoding="utf-8") as data:
+        data_lines = data.readlines()
+        for line in data_lines:
+            lexer.input(line)
+            for tok in lexer:
+                print(
+                    f"{spp}{tok.type}{' '*(12-len(tok.type))}{spp}{tok.value}{' '*(15-len(tok.value))}{spp}{tok.lineno}{' '*(10-len(str(tok.lineno)))}{spp}{tok.lexpos}{' '*(10-len(str(tok.lexpos)))}{spp}"
+                )
     data.close()
 
 
