@@ -101,6 +101,7 @@ t_MINUSEQ = r"\-="
 t_MINUS = r"\-"
 t_EXPON = r"\*\*"
 t_TIMES = r"\*"
+t_DIVIDE = r"\/"
 t_COLON = r":"
 t_UNDERSCR = r"\_"
 t_BOOLAND = r"\&\&"
@@ -169,10 +170,20 @@ def print_title():
     print(" ", chalk.bold.black("-") * 46)
 
 
-def main():
+def lex_data(data):
+    lexer = lex.lex()
+    print_title()
+    lexer.input(data)
+    for tok in lexer:
+        print(
+            f"{spp}{tok.type}{' '*(12-len(tok.type))}{spp}{tok.value}{' '*(15-len(tok.value))}{spp}{tok.lineno}{' '*(10-len(str(tok.lineno)))}{spp}{tok.lexpos}{' '*(10-len(str(tok.lexpos)))}{spp}"
+        )
+
+
+def lex_files(file_path):
     lexer = lex.lex()  # debub = 1
     print_title()
-    with open("data.txt", mode="r", encoding="utf-8") as data:
+    with open(file_path, mode="r", encoding="utf8") as data:
         data_lines = data.readlines()
         for line in data_lines:
             lexer.input(line)
@@ -181,7 +192,3 @@ def main():
                     f"{spp}{tok.type}{' '*(12-len(tok.type))}{spp}{tok.value}{' '*(15-len(tok.value))}{spp}{tok.lineno}{' '*(10-len(str(tok.lineno)))}{spp}{tok.lexpos}{' '*(10-len(str(tok.lexpos)))}{spp}"
                 )
     data.close()
-
-
-if __name__ == "__main__":
-    main()
