@@ -29,7 +29,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args.files != "data.txt" and not args.data:
+    if args.files != "data.rb" and not args.data:
         lex_files(args.files)
     elif args.data:
         lex_data(args.data)
