@@ -110,8 +110,44 @@ def p_control_unless(p):
     """
 
 
+def p_when(p):
+    """when : WHEN objs
+    | WHEN objs THEN
+    | WHEN comptn
+    """
+
+
+def p_whens(p):
+    """whens : when
+    | when whens
+    """
+
+
+def p_control_case(p):
+    """control : CASE ID whens else END
+    | CASE ID whens END
+    """
+
+
+def p_ids(p):
+    """ids : ID
+    | ID COMMA ids"""
+
+
+def p_array(p):
+    """array : LBRAKET objs RBRAKET
+    | LBRAKET ids RBRAKET
+    | LBRAKET objs COMMA ids RBRAKET
+    | LBRAKET ids COMMA objs RBRAKET
+    """
+
+
 def p_struc_set(p):
-    """struc : var"""
+    """struc : SET DOT NEW
+    | SET DOT NEW LPAREN RPAREN
+    | SET DOT NEW LPAREN array RPAREN
+    | SET array
+    """
 
 
 def p_objs(p):
@@ -124,6 +160,15 @@ def p_obj(p):
     """obj : STRING
     | num
     | bool
+    | range
+    """
+
+
+def p_range(p):
+    """range : LPAREN INT DOT DOT INT RPAREN
+    | INT DOT DOT INT
+    | LPAREN STRING DOT DOT STRING
+    | STRING DOT DOT STRING
     """
 
 

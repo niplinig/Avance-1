@@ -40,6 +40,9 @@ reserved = {
     "unless": "UNLESS",
     "ensure": "ENSURE",
     "next": "NEXT",
+    "not": "NOT",
+    "Set": "SET",
+    "new": "NEW",
 }
 
 # Secuencia de tokens
