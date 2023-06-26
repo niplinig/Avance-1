@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AMPERS AND ARRAY AT BEGIN BOOLAND BOOLOR BREAK CASE CLASS COLON COMMA COMMENT DEF DIVIDE DOLLARSGN DOT DUODOT ELSE ELSIF END ENSURE EQCOMP EQUALS EXPON FALSE FLOAT FOR GREATEQTH GREATH ID IF IN INT LBRACE LBRAKET LESSEQTH LESSTH LPAREN MINUS MINUSEQ MODULE NEXT NIL OR PIPE PLUS PLUSEQ RBRACE RBRAKET RETRY RETURN RPAREN SELF SEMICOLON STRING SUPER THEN TILDE TIMES TRIDOT TRUE UNDERSCR UNLESS UNTIL WHEN WHILEnumeric : INTnumeric : FLOATaddition : numeric PLUS numericsubstrac : numeric MINUS numeric'
+_lr_signature = 'AMPERS AND ARRAY AT BEGIN BOOLAND BOOLOR BREAK CASE CLASS COLON COMMA COMMENT COMPX DEF DIVIDE DOLLARSGN DOT DUODOT ELSE ELSIF END ENSURE EQCOMP EQUALS EXPON FALSE FLOAT FOR GREATEQTH GREATH ID IF IN INT LBRACE LBRAKET LESSEQTH LESSTH LPAREN MINUS MINUSEQ MODULE NEXT NIL NOTEQ OR PIPE PLUS PLUSEQ RAT RBRACE RBRAKET RETRY RETURN RPAREN SELF SEMICOLON STRING SUPER THEN TILDE TIMES TRIDOT TRUE UNDERSCR UNLESS UNTIL WHEN WHILEinit : cmmdbool : TRUE\n    | FALSE\n    num : INT\n    | FLOAT\n    | RAT\n    | COMPX\n    optr : PLUS\n    | MINUS\n    | TIMES\n    | DIVIDE\n    | MODULE\n    | EXPON\n    optn : num optr numcomptn : obj comptr objcomptr : EQCOMP\n    | LESSTH\n    | LESSEQTH\n    | GREATH\n    | GREATEQTH\n    | NOTEQ\n    var : ID EQUALS obj\n    | ID EQUALS ID\n    | ID EQUALS NIL\n    \n    func : DEF ID LPAREN objs RPAREN cmmd END\n    | DEF ID LPAREN RPAREN cmmd END\n    | DEF ID cmmd END\n    | DEF ID LPAREN objs RPAREN cmmd RETURN obj END\n    | DEF ID LPAREN RPAREN cmmd RETURN obj END\n    | DEF ID cmmd RETURN obj END\n    else : ELSE comptn cmmd\n    | ELSE bool cmmd\n    elsif : ELSIF comptn cmmd\n    | ELSIF bool cmmd\n    elses : else\n    | elsif elses\n    control : IF comptn cmmd END\n    | IF bool cmmd END\n    | IF comptn cmmd elses END\n    | IF bool cmmd elses END\n    control : UNLESS comptn COLON cmmd END\n    | UNLESS bool COLON cmmd END\n    | UNLESS comptn cmmd elses END\n    | UNLESS bool cmmd elses END\n    objs : obj\n    | obj COMMA objs\n    obj : STRING\n    | num\n    | bool\n    cmmd : var\n    | func\n    | control\n    | optn\n    '
     
-_lr_action_items = {'INT':([0,],[2,]),'FLOAT':([0,],[3,]),'$end':([1,2,3,],[0,-1,-2,]),}
+_lr_action_items = {'ID':([0,8,12,13,14,15,16,17,18,19,21,22,23,24,25,26,37,49,51,55,67,72,78,79,80,81,],[7,17,-4,-5,-6,-7,34,7,7,7,-2,-3,-47,-48,7,7,-49,7,7,7,-15,7,7,7,7,7,]),'DEF':([0,12,13,14,15,17,18,19,21,22,23,24,25,26,37,49,51,55,67,72,78,79,80,81,],[8,-4,-5,-6,-7,8,8,8,-2,-3,-47,-48,8,8,-49,8,8,8,-15,8,8,8,8,8,]),'IF':([0,12,13,14,15,17,18,19,21,22,23,24,25,26,37,49,51,55,67,72,78,79,80,81,],[9,-4,-5,-6,-7,9,9,9,-2,-3,-47,-48,9,9,-49,9,9,9,-15,9,9,9,9,9,]),'UNLESS':([0,12,13,14,15,17,18,19,21,22,23,24,25,26,37,49,51,55,67,72,78,79,80,81,],[10,-4,-5,-6,-7,10,10,10,-2,-3,-47,-48,10,10,-49,10,10,10,-15,10,10,10,10,10,]),'INT':([0,9,10,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,37,38,42,43,44,45,46,47,48,49,51,55,58,63,64,67,72,74,78,79,80,81,89,97,],[12,12,12,-4,-5,-6,-7,12,12,12,12,-2,-3,-47,-48,12,12,12,-8,-9,-10,-11,-12,-13,-49,12,12,-16,-17,-18,-19,-20,-21,12,12,12,12,12,12,-15,12,12,12,12,12,12,12,12,]),'FLOAT':([0,9,10,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,37,38,42,43,44,45,46,47,48,49,51,55,58,63,64,67,72,74,78,79,80,81,89,97,],[13,13,13,-4,-5,-6,-7,13,13,13,13,-2,-3,-47,-48,13,13,13,-8,-9,-10,-11,-12,-13,-49,13,13,-16,-17,-18,-19,-20,-21,13,13,13,13,13,13,-15,13,13,13,13,13,13,13,13,]),'RAT':([0,9,10,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,37,38,42,43,44,45,46,47,48,49,51,55,58,63,64,67,72,74,78,79,80,81,89,97,],[14,14,14,-4,-5,-6,-7,14,14,14,14,-2,-3,-47,-48,14,14,14,-8,-9,-10,-11,-12,-13,-49,14,14,-16,-17,-18,-19,-20,-21,14,14,14,14,14,14,-15,14,14,14,14,14,14,14,14,]),'COMPX':([0,9,10,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,37,38,42,43,44,45,46,47,48,49,51,55,58,63,64,67,72,74,78,79,80,81,89,97,],[15,15,15,-4,-5,-6,-7,15,15,15,15,-2,-3,-47,-48,15,15,15,-8,-9,-10,-11,-12,-13,-49,15,15,-16,-17,-18,-19,-20,-21,15,15,15,15,15,15,-15,15,15,15,15,15,15,15,15,]),'$end':([1,2,3,4,5,6,12,13,14,15,21,22,23,24,34,35,36,37,53,57,59,65,76,82,83,84,85,86,88,91,96,100,101,],[0,-1,-50,-51,-52,-53,-4,-5,-6,-7,-2,-3,-47,-48,-23,-22,-24,-49,-14,-27,-37,-38,-39,-40,-41,-43,-42,-44,-26,-30,-25,-29,-28,]),'END':([3,4,5,6,12,13,14,15,21,22,23,24,34,35,36,37,39,40,41,53,57,59,60,61,65,66,68,69,70,71,73,75,76,77,82,83,84,85,86,87,88,91,92,93,96,98,99,100,101,],[-50,-51,-52,-53,-4,-5,-6,-7,-2,-3,-47,-48,-23,-22,-24,-49,57,59,65,-14,-27,-37,76,-35,-38,82,83,84,85,86,88,91,-39,-36,-40,-41,-43,-42,-44,96,-26,-30,-31,-32,-25,100,101,-29,-28,]),'RETURN':([3,4,5,6,12,13,14,15,21,22,23,24,34,35,36,37,39,53,57,59,65,73,76,82,83,84,85,86,87,88,91,96,100,101,],[-50,-51,-52,-53,-4,-5,-6,-7,-2,-3,-47,-48,-23,-22,-24,-49,58,-14,-27,-37,-38,89,-39,-40,-41,-43,-42,-44,97,-26,-30,-25,-29,-28,]),'ELSE':([3,4,5,6,12,13,14,15,21,22,23,24,34,35,36,37,40,41,50,52,53,57,59,62,65,76,82,83,84,85,86,88,91,94,95,96,100,101,],[-50,-51,-52,-53,-4,-5,-6,-7,-2,-3,-47,-48,-23,-22,-24,-49,63,63,63,63,-14,-27,-37,63,-38,-39,-40,-41,-43,-42,-44,-26,-30,-33,-34,-25,-29,-28,]),'ELSIF':([3,4,5,6,12,13,14,15,21,22,23,24,34,35,36,37,40,41,50,52,53,57,59,62,65,76,82,83,84,85,86,88,91,94,95,96,100,101,],[-50,-51,-52,-53,-4,-5,-6,-7,-2,-3,-47,-48,-23,-22,-24,-49,64,64,64,64,-14,-27,-37,64,-38,-39,-40,-41,-43,-42,-44,-26,-30,-33,-34,-25,-29,-28,]),'EQUALS':([7,],[16,]),'TRUE':([9,10,16,38,42,43,44,45,46,47,48,58,63,64,74,89,97,],[21,21,21,21,21,-16,-17,-18,-19,-20,-21,21,21,21,21,21,21,]),'FALSE':([9,10,16,38,42,43,44,45,46,47,48,58,63,64,74,89,97,],[22,22,22,22,22,-16,-17,-18,-19,-20,-21,22,22,22,22,22,22,]),'STRING':([9,10,16,38,42,43,44,45,46,47,48,58,63,64,74,89,97,],[23,23,23,23,23,-16,-17,-18,-19,-20,-21,23,23,23,23,23,23,]),'PLUS':([11,12,13,14,15,],[28,-4,-5,-6,-7,]),'MINUS':([11,12,13,14,15,],[29,-4,-5,-6,-7,]),'TIMES':([11,12,13,14,15,],[30,-4,-5,-6,-7,]),'DIVIDE':([11,12,13,14,15,],[31,-4,-5,-6,-7,]),'MODULE':([11,12,13,14,15,],[32,-4,-5,-6,-7,]),'EXPON':([11,12,13,14,15,],[33,-4,-5,-6,-7,]),'EQCOMP':([12,13,14,15,19,20,21,22,23,24,26,79,81,],[-4,-5,-6,-7,-49,43,-2,-3,-47,-48,-49,-49,-49,]),'LESSTH':([12,13,14,15,19,20,21,22,23,24,26,79,81,],[-4,-5,-6,-7,-49,44,-2,-3,-47,-48,-49,-49,-49,]),'LESSEQTH':([12,13,14,15,19,20,21,22,23,24,26,79,81,],[-4,-5,-6,-7,-49,45,-2,-3,-47,-48,-49,-49,-49,]),'GREATH':([12,13,14,15,19,20,21,22,23,24,26,79,81,],[-4,-5,-6,-7,-49,46,-2,-3,-47,-48,-49,-49,-49,]),'GREATEQTH':([12,13,14,15,19,20,21,22,23,24,26,79,81,],[-4,-5,-6,-7,-49,47,-2,-3,-47,-48,-49,-49,-49,]),'NOTEQ':([12,13,14,15,19,20,21,22,23,24,26,79,81,],[-4,-5,-6,-7,-49,48,-2,-3,-47,-48,-49,-49,-49,]),'COMMA':([12,13,14,15,21,22,23,24,37,56,],[-4,-5,-6,-7,-2,-3,-47,-48,-49,74,]),'RPAREN':([12,13,14,15,21,22,23,24,37,38,54,56,90,],[-4,-5,-6,-7,-2,-3,-47,-48,-49,55,72,-45,-46,]),'COLON':([12,13,14,15,21,22,23,24,25,26,37,67,],[-4,-5,-6,-7,-2,-3,-47,-48,49,51,-49,-15,]),'NIL':([16,],[36,]),'LPAREN':([17,],[38,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'numeric':([0,],[1,]),}
+_lr_goto_items = {'init':([0,],[1,]),'cmmd':([0,17,18,19,25,26,49,51,55,72,78,79,80,81,],[2,39,40,41,50,52,68,70,73,87,92,93,94,95,]),'var':([0,17,18,19,25,26,49,51,55,72,78,79,80,81,],[3,3,3,3,3,3,3,3,3,3,3,3,3,3,]),'func':([0,17,18,19,25,26,49,51,55,72,78,79,80,81,],[4,4,4,4,4,4,4,4,4,4,4,4,4,4,]),'control':([0,17,18,19,25,26,49,51,55,72,78,79,80,81,],[5,5,5,5,5,5,5,5,5,5,5,5,5,5,]),'optn':([0,17,18,19,25,26,49,51,55,72,78,79,80,81,],[6,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'num':([0,9,10,16,17,18,19,25,26,27,38,42,49,51,55,58,63,64,72,74,78,79,80,81,89,97,],[11,24,24,24,11,11,11,11,11,53,24,24,11,11,11,24,24,24,11,24,11,11,11,11,24,24,]),'comptn':([9,10,63,64,],[18,25,78,80,]),'bool':([9,10,16,38,42,58,63,64,74,89,97,],[19,26,37,37,37,37,79,81,37,37,37,]),'obj':([9,10,16,38,42,58,63,64,74,89,97,],[20,20,35,56,67,75,20,20,56,98,99,]),'optr':([11,],[27,]),'comptr':([20,],[42,]),'objs':([38,74,],[54,90,]),'elses':([40,41,50,52,62,],[60,66,69,71,77,]),'else':([40,41,50,52,62,],[61,61,61,61,61,]),'elsif':([40,41,50,52,62,],[62,62,62,62,62,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,9 +26,58 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> numeric","S'",1,None,None,None),
-  ('numeric -> INT','numeric',1,'p_numeric_int','semtic.py',14),
-  ('numeric -> FLOAT','numeric',1,'p_numeric_float','semtic.py',18),
-  ('addition -> numeric PLUS numeric','addition',3,'p_addition','semtic.py',22),
-  ('substrac -> numeric MINUS numeric','substrac',3,'p_substrac','semtic.py',26),
+  ("S' -> init","S'",1,None,None,None),
+  ('init -> cmmd','init',1,'p_init','semtic.py',16),
+  ('bool -> TRUE','bool',1,'p_bool','semtic.py',20),
+  ('bool -> FALSE','bool',1,'p_bool','semtic.py',21),
+  ('num -> INT','num',1,'p_num','semtic.py',26),
+  ('num -> FLOAT','num',1,'p_num','semtic.py',27),
+  ('num -> RAT','num',1,'p_num','semtic.py',28),
+  ('num -> COMPX','num',1,'p_num','semtic.py',29),
+  ('optr -> PLUS','optr',1,'p_optr','semtic.py',34),
+  ('optr -> MINUS','optr',1,'p_optr','semtic.py',35),
+  ('optr -> TIMES','optr',1,'p_optr','semtic.py',36),
+  ('optr -> DIVIDE','optr',1,'p_optr','semtic.py',37),
+  ('optr -> MODULE','optr',1,'p_optr','semtic.py',38),
+  ('optr -> EXPON','optr',1,'p_optr','semtic.py',39),
+  ('optn -> num optr num','optn',3,'p_optn','semtic.py',44),
+  ('comptn -> obj comptr obj','comptn',3,'p_comptn','semtic.py',48),
+  ('comptr -> EQCOMP','comptr',1,'p_comptr','semtic.py',52),
+  ('comptr -> LESSTH','comptr',1,'p_comptr','semtic.py',53),
+  ('comptr -> LESSEQTH','comptr',1,'p_comptr','semtic.py',54),
+  ('comptr -> GREATH','comptr',1,'p_comptr','semtic.py',55),
+  ('comptr -> GREATEQTH','comptr',1,'p_comptr','semtic.py',56),
+  ('comptr -> NOTEQ','comptr',1,'p_comptr','semtic.py',57),
+  ('var -> ID EQUALS obj','var',3,'p_var','semtic.py',62),
+  ('var -> ID EQUALS ID','var',3,'p_var','semtic.py',63),
+  ('var -> ID EQUALS NIL','var',3,'p_var','semtic.py',64),
+  ('func -> DEF ID LPAREN objs RPAREN cmmd END','func',7,'p_func','semtic.py',70),
+  ('func -> DEF ID LPAREN RPAREN cmmd END','func',6,'p_func','semtic.py',71),
+  ('func -> DEF ID cmmd END','func',4,'p_func','semtic.py',72),
+  ('func -> DEF ID LPAREN objs RPAREN cmmd RETURN obj END','func',9,'p_func','semtic.py',73),
+  ('func -> DEF ID LPAREN RPAREN cmmd RETURN obj END','func',8,'p_func','semtic.py',74),
+  ('func -> DEF ID cmmd RETURN obj END','func',6,'p_func','semtic.py',75),
+  ('else -> ELSE comptn cmmd','else',3,'p_else','semtic.py',80),
+  ('else -> ELSE bool cmmd','else',3,'p_else','semtic.py',81),
+  ('elsif -> ELSIF comptn cmmd','elsif',3,'p_elsif','semtic.py',86),
+  ('elsif -> ELSIF bool cmmd','elsif',3,'p_elsif','semtic.py',87),
+  ('elses -> else','elses',1,'p_elses','semtic.py',92),
+  ('elses -> elsif elses','elses',2,'p_elses','semtic.py',93),
+  ('control -> IF comptn cmmd END','control',4,'p_contol_if','semtic.py',98),
+  ('control -> IF bool cmmd END','control',4,'p_contol_if','semtic.py',99),
+  ('control -> IF comptn cmmd elses END','control',5,'p_contol_if','semtic.py',100),
+  ('control -> IF bool cmmd elses END','control',5,'p_contol_if','semtic.py',101),
+  ('control -> UNLESS comptn COLON cmmd END','control',5,'p_control_unless','semtic.py',106),
+  ('control -> UNLESS bool COLON cmmd END','control',5,'p_control_unless','semtic.py',107),
+  ('control -> UNLESS comptn cmmd elses END','control',5,'p_control_unless','semtic.py',108),
+  ('control -> UNLESS bool cmmd elses END','control',5,'p_control_unless','semtic.py',109),
+  ('objs -> obj','objs',1,'p_objs','semtic.py',114),
+  ('objs -> obj COMMA objs','objs',3,'p_objs','semtic.py',115),
+  ('obj -> STRING','obj',1,'p_obj','semtic.py',120),
+  ('obj -> num','obj',1,'p_obj','semtic.py',121),
+  ('obj -> bool','obj',1,'p_obj','semtic.py',122),
+  ('cmmd -> var','cmmd',1,'p_cmmd','semtic.py',127),
+  ('cmmd -> func','cmmd',1,'p_cmmd','semtic.py',128),
+  ('cmmd -> control','cmmd',1,'p_cmmd','semtic.py',129),
+  ('cmmd -> optn','cmmd',1,'p_cmmd','semtic.py',130),
 ]

@@ -7,7 +7,7 @@
 # ----------------------------------
 
 import argparse
-from main import lex_data, lex_files
+from lexic import lex_data, lex_files
 import pathlib
 
 

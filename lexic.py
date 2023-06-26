@@ -51,6 +51,7 @@ tokens = (
     "COMMENT",
     "EQCOMP",
     "EQUALS",
+    "NOTEQ",
     "FLOAT",
     "INT",
     "PLUS",
@@ -84,6 +85,8 @@ tokens = (
     "TILDE",
     "BOOLAND",
     "BOOLOR",
+    "RAT",
+    "COMPX",
 ) + tuple(reserved.values())
 
 # Expresiones regulares para cada token
@@ -91,7 +94,6 @@ tokens = (
 t_ignore = " \t"
 t_TRIDOT = r"\.\.\."
 t_DUODOT = r"\.\."
-t_FLOAT = r"\.[0-9]+"
 t_DOT = r"\."
 t_EQCOMP = r"=="
 t_INT = r"[0-9]+"
@@ -112,6 +114,7 @@ t_LBRAKET = r"\["
 t_RBRAKET = r"\]"
 t_GREATEQTH = r">="
 t_LESSEQTH = r"<="
+t_NOTEQ = r"\!="
 t_LESSTH = r"<"
 t_GREATH = r">"
 t_COMMA = r","
@@ -125,6 +128,8 @@ t_PIPE = r"\|"
 t_MODULE = r"%"
 t_TILDE = r"~"
 t_EQUALS = r"="
+t_RAT = r"[1-9]+\/[1-9]+r"
+t_COMPX = r"([0-9]*\.[0-9]+ri|[0-9]*\.[0-9]+ir)"
 
 # Número de líneas
 
@@ -145,6 +150,11 @@ def t_ID(t):
 
 def t_STRING(t):
     r"(\'[^\']*\'|\"[^\"]*\")"
+    return t
+
+
+def t_FLOAT(t):
+    r"([0-9]*\.[0-9]+|[0-9]*\.[0-9]e-?[1-9]+)"
     return t
 
 
@@ -170,8 +180,12 @@ def print_title():
     print(" ", chalk.bold.black("-") * 46)
 
 
+# Building lexer
+
+lexer = lex.lex()
+
+
 def lex_data(data):
-    lexer = lex.lex()
     print_title()
     lexer.input(data)
     for tok in lexer:
@@ -181,7 +195,6 @@ def lex_data(data):
 
 
 def lex_files(file_path):
-    lexer = lex.lex()  # debub = 1
     print_title()
     with open(file_path, mode="r", encoding="utf8") as data:
         data_lines = data.readlines()
