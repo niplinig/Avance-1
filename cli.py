@@ -23,7 +23,7 @@ def main():
         "--files",
         help="Ruby text files",
         type=pathlib.Path,
-        default="data.txt",
+        default="data.rb",
     )
     parser.add_argument("-d", "--data", help="Data to analyse", type=str)
 
