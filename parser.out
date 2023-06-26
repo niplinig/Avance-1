@@ -1,0 +1,185 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AMPERS
+    AND
+    ARRAY
+    AT
+    BEGIN
+    BOOLAND
+    BOOLOR
+    BREAK
+    CASE
+    CLASS
+    COLON
+    COMMA
+    COMMENT
+    DEF
+    DIVIDE
+    DOLLARSGN
+    DOT
+    DUODOT
+    ELSE
+    ELSIF
+    END
+    ENSURE
+    EQCOMP
+    EQUALS
+    EXPON
+    FALSE
+    FOR
+    GREATEQTH
+    GREATH
+    ID
+    IF
+    IN
+    LBRACE
+    LBRAKET
+    LESSEQTH
+    LESSTH
+    LPAREN
+    MINUSEQ
+    MODULE
+    NEXT
+    NIL
+    OR
+    PIPE
+    PLUSEQ
+    RBRACE
+    RBRAKET
+    RETRY
+    RETURN
+    RPAREN
+    SELF
+    SEMICOLON
+    STRING
+    SUPER
+    THEN
+    TILDE
+    TIMES
+    TRIDOT
+    TRUE
+    UNDERSCR
+    UNLESS
+    UNTIL
+    WHEN
+    WHILE
+
+Grammar
+
+Rule 0     S' -> numeric
+Rule 1     numeric -> INT
+Rule 2     numeric -> FLOAT
+Rule 3     addition -> numeric PLUS numeric
+Rule 4     substrac -> numeric MINUS numeric
+
+Terminals, with rules where they appear
+
+AMPERS               : 
+AND                  : 
+ARRAY                : 
+AT                   : 
+BEGIN                : 
+BOOLAND              : 
+BOOLOR               : 
+BREAK                : 
+CASE                 : 
+CLASS                : 
+COLON                : 
+COMMA                : 
+COMMENT              : 
+DEF                  : 
+DIVIDE               : 
+DOLLARSGN            : 
+DOT                  : 
+DUODOT               : 
+ELSE                 : 
+ELSIF                : 
+END                  : 
+ENSURE               : 
+EQCOMP               : 
+EQUALS               : 
+EXPON                : 
+FALSE                : 
+FLOAT                : 2
+FOR                  : 
+GREATEQTH            : 
+GREATH               : 
+ID                   : 
+IF                   : 
+IN                   : 
+INT                  : 1
+LBRACE               : 
+LBRAKET              : 
+LESSEQTH             : 
+LESSTH               : 
+LPAREN               : 
+MINUS                : 4
+MINUSEQ              : 
+MODULE               : 
+NEXT                 : 
+NIL                  : 
+OR                   : 
+PIPE                 : 
+PLUS                 : 3
+PLUSEQ               : 
+RBRACE               : 
+RBRAKET              : 
+RETRY                : 
+RETURN               : 
+RPAREN               : 
+SELF                 : 
+SEMICOLON            : 
+STRING               : 
+SUPER                : 
+THEN                 : 
+TILDE                : 
+TIMES                : 
+TRIDOT               : 
+TRUE                 : 
+UNDERSCR             : 
+UNLESS               : 
+UNTIL                : 
+WHEN                 : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+addition             : 
+numeric              : 3 3 4 4 0
+substrac             : 
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . numeric
+    (1) numeric -> . INT
+    (2) numeric -> . FLOAT
+
+    INT             shift and go to state 2
+    FLOAT           shift and go to state 3
+
+    numeric                        shift and go to state 1
+
+state 1
+
+    (0) S' -> numeric .
+
+
+
+state 2
+
+    (1) numeric -> INT .
+
+    $end            reduce using rule 1 (numeric -> INT .)
+
+
+state 3
+
+    (2) numeric -> FLOAT .
+
+    $end            reduce using rule 2 (numeric -> FLOAT .)
+
