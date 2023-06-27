@@ -37,3 +37,17 @@ Use the shell
 ```
 pipenv shell
 ```
+
+## Using CLI
+
+Commands
+-d --data
+-f --files
+
+```
+./cli.py -d "data to analyse with lexer"
+```
+
+```
+./cli.py -f "file path, default data.rb"
+```
