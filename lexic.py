@@ -42,7 +42,7 @@ reserved = {
     "next": "NEXT",
     "not": "NOT",
     "Set": "SET",
-    "new": "NEW",
+    "new": "NEW", "do":"DO"
 }
 
 # Secuencia de tokens
@@ -90,6 +90,7 @@ tokens = (
     "BOOLOR",
     "RAT",
     "COMPX",
+    "ROCKET",
 ) + tuple(reserved.values())
 
 # Expresiones regulares para cada token
@@ -133,7 +134,7 @@ t_TILDE = r"~"
 t_EQUALS = r"="
 t_RAT = r"[1-9]+\/[1-9]+r"
 t_COMPX = r"([0-9]*\.[0-9]+ri|[0-9]*\.[0-9]+ir)"
-
+t_ROCKET= r"=>"
 # Número de líneas
 
 

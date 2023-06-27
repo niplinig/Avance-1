@@ -142,12 +142,38 @@ def p_array(p):
     """
 
 
-def p_struc_set(p):
-    """struc : SET DOT NEW
+def p_strucSet(p):
+    """strucSet : SET DOT NEW
     | SET DOT NEW LPAREN RPAREN
     | SET DOT NEW LPAREN array RPAREN
     | SET array
     """
+
+
+def p_claveHash(p):
+    """claveHash : STRING
+    | num
+    | bool
+    | range
+    | matrix
+    """
+
+
+def p_elementHash(p):
+    """elementHash : claveHash ROCKET obj"""
+
+
+def p_elementsHash(p):
+     """elementsHash  : elementHash COMMA elementHash
+     | elementHash COMMA elementsHash
+"""
+def p_hash(p):
+    """hash : LBRACE elementsHash RBRACE
+    """
+
+def p_control_while(p):
+    """control : WHILE comptn DO cmmd END
+    | WHILE bool DO cmmd END"""
 
 
 def p_objs(p):
@@ -162,6 +188,8 @@ def p_obj(p):
     | bool
     | range
     | matrix
+    | hash
+    | strucSet
     """
 
 
