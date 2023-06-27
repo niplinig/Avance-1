@@ -22,11 +22,11 @@ sudo dnf install pipenv
 ```
 pipenv install --dev
 ```
-
+OR
 ```
 pipenv install requests
 ```
-
+OR
 ```
 pipenv install -e .
 ```
