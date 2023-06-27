@@ -161,6 +161,7 @@ def p_obj(p):
     | num
     | bool
     | range
+    | matrix
     """
 
 
@@ -179,6 +180,15 @@ def p_cmmd(p):
     | optn
     """
 
+def p_matrix(p):
+    "matrix : LBRAKET rows RBRAKET "
+
+def p_rows(p):
+    """rows : row
+    | row COMMA rows"""
+
+def p_row(p):
+    "row : array"
 
 def p_error(p):
     if p:

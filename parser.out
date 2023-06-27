@@ -105,14 +105,19 @@ Rule 64    obj -> STRING
 Rule 65    obj -> num
 Rule 66    obj -> bool
 Rule 67    obj -> range
-Rule 68    range -> LPAREN INT DOT DOT INT RPAREN
-Rule 69    range -> INT DOT DOT INT
-Rule 70    range -> LPAREN STRING DOT DOT STRING
-Rule 71    range -> STRING DOT DOT STRING
-Rule 72    cmmd -> var
-Rule 73    cmmd -> func
-Rule 74    cmmd -> control
-Rule 75    cmmd -> optn
+Rule 68    obj -> matrix
+Rule 69    range -> LPAREN INT DOT DOT INT RPAREN
+Rule 70    range -> INT DOT DOT INT
+Rule 71    range -> LPAREN STRING DOT DOT STRING
+Rule 72    range -> STRING DOT DOT STRING
+Rule 73    cmmd -> var
+Rule 74    cmmd -> func
+Rule 75    cmmd -> control
+Rule 76    cmmd -> optn
+Rule 77    matrix -> LBRAKET rows RBRAKET
+Rule 78    rows -> row
+Rule 79    rows -> row COMMA rows
+Rule 80    row -> array
 
 Terminals, with rules where they appear
 
@@ -127,13 +132,13 @@ BREAK                :
 CASE                 : 50 51
 CLASS                : 
 COLON                : 41 42
-COMMA                : 53 56 57 63
+COMMA                : 53 56 57 63 79
 COMMENT              : 
 COMPX                : 7
 DEF                  : 25 26 27 28 29 30
 DIVIDE               : 11
 DOLLARSGN            : 
-DOT                  : 58 59 60 68 68 69 69 70 70 71 71
+DOT                  : 58 59 60 69 69 70 70 71 71 72 72
 DUODOT               : 
 ELSE                 : 31 32
 ELSIF                : 33 34
@@ -150,12 +155,12 @@ GREATH               : 19
 ID                   : 22 23 23 24 25 26 27 28 29 30 50 51 52 53
 IF                   : 37 38 39 40
 IN                   : 
-INT                  : 4 68 68 69 69
+INT                  : 4 69 69 70 70
 LBRACE               : 
-LBRAKET              : 54 55 56 57
+LBRAKET              : 54 55 56 57 77
 LESSEQTH             : 18
 LESSTH               : 17
-LPAREN               : 25 26 28 29 59 60 68 70
+LPAREN               : 25 26 28 29 59 60 69 71
 MINUS                : 9
 MINUSEQ              : 
 MODULE               : 12
@@ -170,14 +175,14 @@ PLUS                 : 8
 PLUSEQ               : 
 RAT                  : 6
 RBRACE               : 
-RBRAKET              : 54 55 56 57
+RBRAKET              : 54 55 56 57 77
 RETRY                : 
 RETURN               : 28 29 30
-RPAREN               : 25 26 28 29 59 60 68
+RPAREN               : 25 26 28 29 59 60 69
 SELF                 : 
 SEMICOLON            : 
 SET                  : 58 59 60 61
-STRING               : 64 70 70 71 71
+STRING               : 64 71 71 72 72
 SUPER                : 
 THEN                 : 46
 TILDE                : 
@@ -193,26 +198,29 @@ error                :
 
 Nonterminals, with rules where they appear
 
-array                : 60 61
+array                : 60 61 80
 bool                 : 32 34 38 40 42 44 66
 cmmd                 : 1 25 26 27 28 29 30 31 32 33 34 37 38 39 40 41 42 43 44
 comptn               : 31 33 37 39 41 43 47
 comptr               : 15
-control              : 74
+control              : 75
 else                 : 35 50
 elses                : 36 39 40 43 44
 elsif                : 36
-func                 : 73
+func                 : 74
 ids                  : 53 55 56 57
 init                 : 0
+matrix               : 68
 num                  : 14 14 65
 obj                  : 15 15 22 28 29 30 62 63
 objs                 : 25 28 45 46 54 56 57 63
-optn                 : 75
+optn                 : 76
 optr                 : 14
 range                : 67
+row                  : 78 79
+rows                 : 77 79
 struc                : 
-var                  : 72
+var                  : 73
 when                 : 48 49
 whens                : 49 50 51
 
@@ -222,10 +230,10 @@ state 0
 
     (0) S' -> . init
     (1) init -> . cmmd
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -284,46 +292,46 @@ state 2
 
 state 3
 
-    (72) cmmd -> var .
+    (73) cmmd -> var .
 
-    $end            reduce using rule 72 (cmmd -> var .)
-    END             reduce using rule 72 (cmmd -> var .)
-    RETURN          reduce using rule 72 (cmmd -> var .)
-    ELSE            reduce using rule 72 (cmmd -> var .)
-    ELSIF           reduce using rule 72 (cmmd -> var .)
+    $end            reduce using rule 73 (cmmd -> var .)
+    END             reduce using rule 73 (cmmd -> var .)
+    RETURN          reduce using rule 73 (cmmd -> var .)
+    ELSE            reduce using rule 73 (cmmd -> var .)
+    ELSIF           reduce using rule 73 (cmmd -> var .)
 
 
 state 4
 
-    (73) cmmd -> func .
+    (74) cmmd -> func .
 
-    $end            reduce using rule 73 (cmmd -> func .)
-    END             reduce using rule 73 (cmmd -> func .)
-    RETURN          reduce using rule 73 (cmmd -> func .)
-    ELSE            reduce using rule 73 (cmmd -> func .)
-    ELSIF           reduce using rule 73 (cmmd -> func .)
+    $end            reduce using rule 74 (cmmd -> func .)
+    END             reduce using rule 74 (cmmd -> func .)
+    RETURN          reduce using rule 74 (cmmd -> func .)
+    ELSE            reduce using rule 74 (cmmd -> func .)
+    ELSIF           reduce using rule 74 (cmmd -> func .)
 
 
 state 5
 
-    (74) cmmd -> control .
+    (75) cmmd -> control .
 
-    $end            reduce using rule 74 (cmmd -> control .)
-    END             reduce using rule 74 (cmmd -> control .)
-    RETURN          reduce using rule 74 (cmmd -> control .)
-    ELSE            reduce using rule 74 (cmmd -> control .)
-    ELSIF           reduce using rule 74 (cmmd -> control .)
+    $end            reduce using rule 75 (cmmd -> control .)
+    END             reduce using rule 75 (cmmd -> control .)
+    RETURN          reduce using rule 75 (cmmd -> control .)
+    ELSE            reduce using rule 75 (cmmd -> control .)
+    ELSIF           reduce using rule 75 (cmmd -> control .)
 
 
 state 6
 
-    (75) cmmd -> optn .
+    (76) cmmd -> optn .
 
-    $end            reduce using rule 75 (cmmd -> optn .)
-    END             reduce using rule 75 (cmmd -> optn .)
-    RETURN          reduce using rule 75 (cmmd -> optn .)
-    ELSE            reduce using rule 75 (cmmd -> optn .)
-    ELSIF           reduce using rule 75 (cmmd -> optn .)
+    $end            reduce using rule 76 (cmmd -> optn .)
+    END             reduce using rule 76 (cmmd -> optn .)
+    RETURN          reduce using rule 76 (cmmd -> optn .)
+    ELSE            reduce using rule 76 (cmmd -> optn .)
+    ELSIF           reduce using rule 76 (cmmd -> optn .)
 
 
 state 7
@@ -360,29 +368,33 @@ state 9
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
     comptn                         shift and go to state 19
     bool                           shift and go to state 20
     obj                            shift and go to state 21
     num                            shift and go to state 25
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
 state 10
 
@@ -397,36 +409,40 @@ state 10
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    comptn                         shift and go to state 29
-    bool                           shift and go to state 30
+    comptn                         shift and go to state 31
+    bool                           shift and go to state 32
     obj                            shift and go to state 21
     num                            shift and go to state 25
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
 state 11
 
     (50) control -> CASE . ID whens else END
     (51) control -> CASE . ID whens END
 
-    ID              shift and go to state 31
+    ID              shift and go to state 33
 
 
 state 12
@@ -439,14 +455,14 @@ state 12
     (12) optr -> . MODULE
     (13) optr -> . EXPON
 
-    PLUS            shift and go to state 33
-    MINUS           shift and go to state 34
-    TIMES           shift and go to state 35
-    DIVIDE          shift and go to state 36
-    MODULE          shift and go to state 37
-    EXPON           shift and go to state 38
+    PLUS            shift and go to state 35
+    MINUS           shift and go to state 36
+    TIMES           shift and go to state 37
+    DIVIDE          shift and go to state 38
+    MODULE          shift and go to state 39
+    EXPON           shift and go to state 40
 
-    optr                           shift and go to state 32
+    optr                           shift and go to state 34
 
 state 13
 
@@ -499,6 +515,7 @@ state 14
     COMPX           reduce using rule 5 (num -> FLOAT .)
     COLON           reduce using rule 5 (num -> FLOAT .)
     WHEN            reduce using rule 5 (num -> FLOAT .)
+    RBRAKET         reduce using rule 5 (num -> FLOAT .)
     THEN            reduce using rule 5 (num -> FLOAT .)
 
 
@@ -536,6 +553,7 @@ state 15
     COMPX           reduce using rule 6 (num -> RAT .)
     COLON           reduce using rule 6 (num -> RAT .)
     WHEN            reduce using rule 6 (num -> RAT .)
+    RBRAKET         reduce using rule 6 (num -> RAT .)
     THEN            reduce using rule 6 (num -> RAT .)
 
 
@@ -573,6 +591,7 @@ state 16
     COMPX           reduce using rule 7 (num -> COMPX .)
     COLON           reduce using rule 7 (num -> COMPX .)
     WHEN            reduce using rule 7 (num -> COMPX .)
+    RBRAKET         reduce using rule 7 (num -> COMPX .)
     THEN            reduce using rule 7 (num -> COMPX .)
 
 
@@ -585,32 +604,36 @@ state 17
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
-    ID              shift and go to state 39
-    NIL             shift and go to state 41
+    ID              shift and go to state 41
+    NIL             shift and go to state 43
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    obj                            shift and go to state 40
+    obj                            shift and go to state 42
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
 state 18
 
@@ -620,10 +643,10 @@ state 18
     (28) func -> DEF ID . LPAREN objs RPAREN cmmd RETURN obj END
     (29) func -> DEF ID . LPAREN RPAREN cmmd RETURN obj END
     (30) func -> DEF ID . cmmd RETURN obj END
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -649,7 +672,7 @@ state 18
     (6) num -> . RAT
     (7) num -> . COMPX
 
-    LPAREN          shift and go to state 43
+    LPAREN          shift and go to state 45
     ID              shift and go to state 7
     DEF             shift and go to state 8
     IF              shift and go to state 9
@@ -660,7 +683,7 @@ state 18
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 44
+    cmmd                           shift and go to state 46
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
@@ -671,10 +694,10 @@ state 19
 
     (37) control -> IF comptn . cmmd END
     (39) control -> IF comptn . cmmd elses END
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -710,7 +733,7 @@ state 19
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 45
+    cmmd                           shift and go to state 47
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
@@ -722,10 +745,10 @@ state 20
     (38) control -> IF bool . cmmd END
     (40) control -> IF bool . cmmd elses END
     (66) obj -> bool .
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -767,7 +790,7 @@ state 20
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 46
+    cmmd                           shift and go to state 48
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
@@ -784,14 +807,14 @@ state 21
     (20) comptr -> . GREATEQTH
     (21) comptr -> . NOTEQ
 
-    EQCOMP          shift and go to state 48
-    LESSTH          shift and go to state 49
-    LESSEQTH        shift and go to state 50
-    GREATH          shift and go to state 51
-    GREATEQTH       shift and go to state 52
-    NOTEQ           shift and go to state 53
+    EQCOMP          shift and go to state 50
+    LESSTH          shift and go to state 51
+    LESSEQTH        shift and go to state 52
+    GREATH          shift and go to state 53
+    GREATEQTH       shift and go to state 54
+    NOTEQ           shift and go to state 55
 
-    comptr                         shift and go to state 47
+    comptr                         shift and go to state 49
 
 state 22
 
@@ -821,6 +844,7 @@ state 22
     COMMA           reduce using rule 2 (bool -> TRUE .)
     RPAREN          reduce using rule 2 (bool -> TRUE .)
     WHEN            reduce using rule 2 (bool -> TRUE .)
+    RBRAKET         reduce using rule 2 (bool -> TRUE .)
     THEN            reduce using rule 2 (bool -> TRUE .)
 
 
@@ -852,13 +876,14 @@ state 23
     COMMA           reduce using rule 3 (bool -> FALSE .)
     RPAREN          reduce using rule 3 (bool -> FALSE .)
     WHEN            reduce using rule 3 (bool -> FALSE .)
+    RBRAKET         reduce using rule 3 (bool -> FALSE .)
     THEN            reduce using rule 3 (bool -> FALSE .)
 
 
 state 24
 
     (64) obj -> STRING .
-    (71) range -> STRING . DOT DOT STRING
+    (72) range -> STRING . DOT DOT STRING
 
     EQCOMP          reduce using rule 64 (obj -> STRING .)
     LESSTH          reduce using rule 64 (obj -> STRING .)
@@ -884,8 +909,9 @@ state 24
     COMPX           reduce using rule 64 (obj -> STRING .)
     COLON           reduce using rule 64 (obj -> STRING .)
     WHEN            reduce using rule 64 (obj -> STRING .)
+    RBRAKET         reduce using rule 64 (obj -> STRING .)
     THEN            reduce using rule 64 (obj -> STRING .)
-    DOT             shift and go to state 54
+    DOT             shift and go to state 56
 
 
 state 25
@@ -916,6 +942,7 @@ state 25
     COMPX           reduce using rule 65 (obj -> num .)
     COLON           reduce using rule 65 (obj -> num .)
     WHEN            reduce using rule 65 (obj -> num .)
+    RBRAKET         reduce using rule 65 (obj -> num .)
     THEN            reduce using rule 65 (obj -> num .)
 
 
@@ -947,13 +974,46 @@ state 26
     COMPX           reduce using rule 67 (obj -> range .)
     COLON           reduce using rule 67 (obj -> range .)
     WHEN            reduce using rule 67 (obj -> range .)
+    RBRAKET         reduce using rule 67 (obj -> range .)
     THEN            reduce using rule 67 (obj -> range .)
 
 
 state 27
 
+    (68) obj -> matrix .
+
+    EQCOMP          reduce using rule 68 (obj -> matrix .)
+    LESSTH          reduce using rule 68 (obj -> matrix .)
+    LESSEQTH        reduce using rule 68 (obj -> matrix .)
+    GREATH          reduce using rule 68 (obj -> matrix .)
+    GREATEQTH       reduce using rule 68 (obj -> matrix .)
+    NOTEQ           reduce using rule 68 (obj -> matrix .)
+    $end            reduce using rule 68 (obj -> matrix .)
+    END             reduce using rule 68 (obj -> matrix .)
+    RETURN          reduce using rule 68 (obj -> matrix .)
+    ELSE            reduce using rule 68 (obj -> matrix .)
+    ELSIF           reduce using rule 68 (obj -> matrix .)
+    COMMA           reduce using rule 68 (obj -> matrix .)
+    RPAREN          reduce using rule 68 (obj -> matrix .)
+    ID              reduce using rule 68 (obj -> matrix .)
+    DEF             reduce using rule 68 (obj -> matrix .)
+    IF              reduce using rule 68 (obj -> matrix .)
+    UNLESS          reduce using rule 68 (obj -> matrix .)
+    CASE            reduce using rule 68 (obj -> matrix .)
+    INT             reduce using rule 68 (obj -> matrix .)
+    FLOAT           reduce using rule 68 (obj -> matrix .)
+    RAT             reduce using rule 68 (obj -> matrix .)
+    COMPX           reduce using rule 68 (obj -> matrix .)
+    COLON           reduce using rule 68 (obj -> matrix .)
+    WHEN            reduce using rule 68 (obj -> matrix .)
+    RBRAKET         reduce using rule 68 (obj -> matrix .)
+    THEN            reduce using rule 68 (obj -> matrix .)
+
+
+state 28
+
     (4) num -> INT .
-    (69) range -> INT . DOT DOT INT
+    (70) range -> INT . DOT DOT INT
 
     EQCOMP          reduce using rule 4 (num -> INT .)
     LESSTH          reduce using rule 4 (num -> INT .)
@@ -979,27 +1039,45 @@ state 27
     COMPX           reduce using rule 4 (num -> INT .)
     COLON           reduce using rule 4 (num -> INT .)
     WHEN            reduce using rule 4 (num -> INT .)
+    RBRAKET         reduce using rule 4 (num -> INT .)
     THEN            reduce using rule 4 (num -> INT .)
-    DOT             shift and go to state 55
-
-
-state 28
-
-    (68) range -> LPAREN . INT DOT DOT INT RPAREN
-    (70) range -> LPAREN . STRING DOT DOT STRING
-
-    INT             shift and go to state 56
-    STRING          shift and go to state 57
+    DOT             shift and go to state 57
 
 
 state 29
 
+    (69) range -> LPAREN . INT DOT DOT INT RPAREN
+    (71) range -> LPAREN . STRING DOT DOT STRING
+
+    INT             shift and go to state 58
+    STRING          shift and go to state 59
+
+
+state 30
+
+    (77) matrix -> LBRAKET . rows RBRAKET
+    (78) rows -> . row
+    (79) rows -> . row COMMA rows
+    (80) row -> . array
+    (54) array -> . LBRAKET objs RBRAKET
+    (55) array -> . LBRAKET ids RBRAKET
+    (56) array -> . LBRAKET objs COMMA ids RBRAKET
+    (57) array -> . LBRAKET ids COMMA objs RBRAKET
+
+    LBRAKET         shift and go to state 60
+
+    rows                           shift and go to state 61
+    row                            shift and go to state 62
+    array                          shift and go to state 63
+
+state 31
+
     (41) control -> UNLESS comptn . COLON cmmd END
     (43) control -> UNLESS comptn . cmmd elses END
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -1025,7 +1103,7 @@ state 29
     (6) num -> . RAT
     (7) num -> . COMPX
 
-    COLON           shift and go to state 58
+    COLON           shift and go to state 64
     ID              shift and go to state 7
     DEF             shift and go to state 8
     IF              shift and go to state 9
@@ -1036,22 +1114,22 @@ state 29
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 59
+    cmmd                           shift and go to state 65
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
-state 30
+state 32
 
     (42) control -> UNLESS bool . COLON cmmd END
     (44) control -> UNLESS bool . cmmd elses END
     (66) obj -> bool .
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -1077,7 +1155,7 @@ state 30
     (6) num -> . RAT
     (7) num -> . COMPX
 
-    COLON           shift and go to state 60
+    COLON           shift and go to state 66
     EQCOMP          reduce using rule 66 (obj -> bool .)
     LESSTH          reduce using rule 66 (obj -> bool .)
     LESSEQTH        reduce using rule 66 (obj -> bool .)
@@ -1094,14 +1172,14 @@ state 30
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 61
+    cmmd                           shift and go to state 67
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
-state 31
+state 33
 
     (50) control -> CASE ID . whens else END
     (51) control -> CASE ID . whens END
@@ -1111,12 +1189,12 @@ state 31
     (46) when -> . WHEN objs THEN
     (47) when -> . WHEN comptn
 
-    WHEN            shift and go to state 64
+    WHEN            shift and go to state 70
 
-    whens                          shift and go to state 62
-    when                           shift and go to state 63
+    whens                          shift and go to state 68
+    when                           shift and go to state 69
 
-state 32
+state 34
 
     (14) optn -> num optr . num
     (4) num -> . INT
@@ -1129,9 +1207,9 @@ state 32
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    num                            shift and go to state 65
+    num                            shift and go to state 71
 
-state 33
+state 35
 
     (8) optr -> PLUS .
 
@@ -1141,7 +1219,7 @@ state 33
     COMPX           reduce using rule 8 (optr -> PLUS .)
 
 
-state 34
+state 36
 
     (9) optr -> MINUS .
 
@@ -1151,7 +1229,7 @@ state 34
     COMPX           reduce using rule 9 (optr -> MINUS .)
 
 
-state 35
+state 37
 
     (10) optr -> TIMES .
 
@@ -1161,7 +1239,7 @@ state 35
     COMPX           reduce using rule 10 (optr -> TIMES .)
 
 
-state 36
+state 38
 
     (11) optr -> DIVIDE .
 
@@ -1171,7 +1249,7 @@ state 36
     COMPX           reduce using rule 11 (optr -> DIVIDE .)
 
 
-state 37
+state 39
 
     (12) optr -> MODULE .
 
@@ -1181,7 +1259,7 @@ state 37
     COMPX           reduce using rule 12 (optr -> MODULE .)
 
 
-state 38
+state 40
 
     (13) optr -> EXPON .
 
@@ -1191,7 +1269,7 @@ state 38
     COMPX           reduce using rule 13 (optr -> EXPON .)
 
 
-state 39
+state 41
 
     (23) var -> ID EQUALS ID .
 
@@ -1202,7 +1280,7 @@ state 39
     ELSIF           reduce using rule 23 (var -> ID EQUALS ID .)
 
 
-state 40
+state 42
 
     (22) var -> ID EQUALS obj .
 
@@ -1213,7 +1291,7 @@ state 40
     ELSIF           reduce using rule 22 (var -> ID EQUALS obj .)
 
 
-state 41
+state 43
 
     (24) var -> ID EQUALS NIL .
 
@@ -1224,7 +1302,7 @@ state 41
     ELSIF           reduce using rule 24 (var -> ID EQUALS NIL .)
 
 
-state 42
+state 44
 
     (66) obj -> bool .
 
@@ -1246,6 +1324,7 @@ state 42
     COMPX           reduce using rule 66 (obj -> bool .)
     COLON           reduce using rule 66 (obj -> bool .)
     WHEN            reduce using rule 66 (obj -> bool .)
+    RBRAKET         reduce using rule 66 (obj -> bool .)
     EQCOMP          reduce using rule 66 (obj -> bool .)
     LESSTH          reduce using rule 66 (obj -> bool .)
     LESSEQTH        reduce using rule 66 (obj -> bool .)
@@ -1255,7 +1334,7 @@ state 42
     THEN            reduce using rule 66 (obj -> bool .)
 
 
-state 43
+state 45
 
     (25) func -> DEF ID LPAREN . objs RPAREN cmmd END
     (26) func -> DEF ID LPAREN . RPAREN cmmd END
@@ -1267,43 +1346,47 @@ state 43
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
-    RPAREN          shift and go to state 67
+    RPAREN          shift and go to state 73
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    objs                           shift and go to state 66
-    obj                            shift and go to state 68
+    objs                           shift and go to state 72
+    obj                            shift and go to state 74
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 44
+state 46
 
     (27) func -> DEF ID cmmd . END
     (30) func -> DEF ID cmmd . RETURN obj END
 
-    END             shift and go to state 69
-    RETURN          shift and go to state 70
+    END             shift and go to state 75
+    RETURN          shift and go to state 76
 
 
-state 45
+state 47
 
     (37) control -> IF comptn cmmd . END
     (39) control -> IF comptn cmmd . elses END
@@ -1314,15 +1397,15 @@ state 45
     (33) elsif -> . ELSIF comptn cmmd
     (34) elsif -> . ELSIF bool cmmd
 
-    END             shift and go to state 71
-    ELSE            shift and go to state 75
-    ELSIF           shift and go to state 76
+    END             shift and go to state 77
+    ELSE            shift and go to state 81
+    ELSIF           shift and go to state 82
 
-    elses                          shift and go to state 72
-    else                           shift and go to state 73
-    elsif                          shift and go to state 74
+    elses                          shift and go to state 78
+    else                           shift and go to state 79
+    elsif                          shift and go to state 80
 
-state 46
+state 48
 
     (38) control -> IF bool cmmd . END
     (40) control -> IF bool cmmd . elses END
@@ -1333,47 +1416,51 @@ state 46
     (33) elsif -> . ELSIF comptn cmmd
     (34) elsif -> . ELSIF bool cmmd
 
-    END             shift and go to state 77
-    ELSE            shift and go to state 75
-    ELSIF           shift and go to state 76
+    END             shift and go to state 83
+    ELSE            shift and go to state 81
+    ELSIF           shift and go to state 82
 
-    elses                          shift and go to state 78
-    else                           shift and go to state 73
-    elsif                          shift and go to state 74
+    elses                          shift and go to state 84
+    else                           shift and go to state 79
+    elsif                          shift and go to state 80
 
-state 47
+state 49
 
     (15) comptn -> obj comptr . obj
     (64) obj -> . STRING
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    obj                            shift and go to state 79
+    obj                            shift and go to state 85
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 48
+state 50
 
     (16) comptr -> EQCOMP .
 
@@ -1385,9 +1472,10 @@ state 48
     TRUE            reduce using rule 16 (comptr -> EQCOMP .)
     FALSE           reduce using rule 16 (comptr -> EQCOMP .)
     LPAREN          reduce using rule 16 (comptr -> EQCOMP .)
+    LBRAKET         reduce using rule 16 (comptr -> EQCOMP .)
 
 
-state 49
+state 51
 
     (17) comptr -> LESSTH .
 
@@ -1399,9 +1487,10 @@ state 49
     TRUE            reduce using rule 17 (comptr -> LESSTH .)
     FALSE           reduce using rule 17 (comptr -> LESSTH .)
     LPAREN          reduce using rule 17 (comptr -> LESSTH .)
+    LBRAKET         reduce using rule 17 (comptr -> LESSTH .)
 
 
-state 50
+state 52
 
     (18) comptr -> LESSEQTH .
 
@@ -1413,9 +1502,10 @@ state 50
     TRUE            reduce using rule 18 (comptr -> LESSEQTH .)
     FALSE           reduce using rule 18 (comptr -> LESSEQTH .)
     LPAREN          reduce using rule 18 (comptr -> LESSEQTH .)
+    LBRAKET         reduce using rule 18 (comptr -> LESSEQTH .)
 
 
-state 51
+state 53
 
     (19) comptr -> GREATH .
 
@@ -1427,9 +1517,10 @@ state 51
     TRUE            reduce using rule 19 (comptr -> GREATH .)
     FALSE           reduce using rule 19 (comptr -> GREATH .)
     LPAREN          reduce using rule 19 (comptr -> GREATH .)
+    LBRAKET         reduce using rule 19 (comptr -> GREATH .)
 
 
-state 52
+state 54
 
     (20) comptr -> GREATEQTH .
 
@@ -1441,9 +1532,10 @@ state 52
     TRUE            reduce using rule 20 (comptr -> GREATEQTH .)
     FALSE           reduce using rule 20 (comptr -> GREATEQTH .)
     LPAREN          reduce using rule 20 (comptr -> GREATEQTH .)
+    LBRAKET         reduce using rule 20 (comptr -> GREATEQTH .)
 
 
-state 53
+state 55
 
     (21) comptr -> NOTEQ .
 
@@ -1455,263 +1547,114 @@ state 53
     TRUE            reduce using rule 21 (comptr -> NOTEQ .)
     FALSE           reduce using rule 21 (comptr -> NOTEQ .)
     LPAREN          reduce using rule 21 (comptr -> NOTEQ .)
-
-
-state 54
-
-    (71) range -> STRING DOT . DOT STRING
-
-    DOT             shift and go to state 80
-
-
-state 55
-
-    (69) range -> INT DOT . DOT INT
-
-    DOT             shift and go to state 81
+    LBRAKET         reduce using rule 21 (comptr -> NOTEQ .)
 
 
 state 56
 
-    (68) range -> LPAREN INT . DOT DOT INT RPAREN
+    (72) range -> STRING DOT . DOT STRING
 
-    DOT             shift and go to state 82
+    DOT             shift and go to state 86
 
 
 state 57
 
-    (70) range -> LPAREN STRING . DOT DOT STRING
+    (70) range -> INT DOT . DOT INT
 
-    DOT             shift and go to state 83
+    DOT             shift and go to state 87
 
 
 state 58
 
-    (41) control -> UNLESS comptn COLON . cmmd END
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
-    (22) var -> . ID EQUALS obj
-    (23) var -> . ID EQUALS ID
-    (24) var -> . ID EQUALS NIL
-    (25) func -> . DEF ID LPAREN objs RPAREN cmmd END
-    (26) func -> . DEF ID LPAREN RPAREN cmmd END
-    (27) func -> . DEF ID cmmd END
-    (28) func -> . DEF ID LPAREN objs RPAREN cmmd RETURN obj END
-    (29) func -> . DEF ID LPAREN RPAREN cmmd RETURN obj END
-    (30) func -> . DEF ID cmmd RETURN obj END
-    (37) control -> . IF comptn cmmd END
-    (38) control -> . IF bool cmmd END
-    (39) control -> . IF comptn cmmd elses END
-    (40) control -> . IF bool cmmd elses END
-    (41) control -> . UNLESS comptn COLON cmmd END
-    (42) control -> . UNLESS bool COLON cmmd END
-    (43) control -> . UNLESS comptn cmmd elses END
-    (44) control -> . UNLESS bool cmmd elses END
-    (50) control -> . CASE ID whens else END
-    (51) control -> . CASE ID whens END
-    (14) optn -> . num optr num
-    (4) num -> . INT
-    (5) num -> . FLOAT
-    (6) num -> . RAT
-    (7) num -> . COMPX
+    (69) range -> LPAREN INT . DOT DOT INT RPAREN
 
-    ID              shift and go to state 7
-    DEF             shift and go to state 8
-    IF              shift and go to state 9
-    UNLESS          shift and go to state 10
-    CASE            shift and go to state 11
-    INT             shift and go to state 13
-    FLOAT           shift and go to state 14
-    RAT             shift and go to state 15
-    COMPX           shift and go to state 16
+    DOT             shift and go to state 88
 
-    cmmd                           shift and go to state 84
-    var                            shift and go to state 3
-    func                           shift and go to state 4
-    control                        shift and go to state 5
-    optn                           shift and go to state 6
-    num                            shift and go to state 12
 
 state 59
 
-    (43) control -> UNLESS comptn cmmd . elses END
-    (35) elses -> . else
-    (36) elses -> . elsif elses
-    (31) else -> . ELSE comptn cmmd
-    (32) else -> . ELSE bool cmmd
-    (33) elsif -> . ELSIF comptn cmmd
-    (34) elsif -> . ELSIF bool cmmd
+    (71) range -> LPAREN STRING . DOT DOT STRING
 
-    ELSE            shift and go to state 75
-    ELSIF           shift and go to state 76
+    DOT             shift and go to state 89
 
-    elses                          shift and go to state 85
-    else                           shift and go to state 73
-    elsif                          shift and go to state 74
 
 state 60
 
-    (42) control -> UNLESS bool COLON . cmmd END
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
-    (22) var -> . ID EQUALS obj
-    (23) var -> . ID EQUALS ID
-    (24) var -> . ID EQUALS NIL
-    (25) func -> . DEF ID LPAREN objs RPAREN cmmd END
-    (26) func -> . DEF ID LPAREN RPAREN cmmd END
-    (27) func -> . DEF ID cmmd END
-    (28) func -> . DEF ID LPAREN objs RPAREN cmmd RETURN obj END
-    (29) func -> . DEF ID LPAREN RPAREN cmmd RETURN obj END
-    (30) func -> . DEF ID cmmd RETURN obj END
-    (37) control -> . IF comptn cmmd END
-    (38) control -> . IF bool cmmd END
-    (39) control -> . IF comptn cmmd elses END
-    (40) control -> . IF bool cmmd elses END
-    (41) control -> . UNLESS comptn COLON cmmd END
-    (42) control -> . UNLESS bool COLON cmmd END
-    (43) control -> . UNLESS comptn cmmd elses END
-    (44) control -> . UNLESS bool cmmd elses END
-    (50) control -> . CASE ID whens else END
-    (51) control -> . CASE ID whens END
-    (14) optn -> . num optr num
-    (4) num -> . INT
-    (5) num -> . FLOAT
-    (6) num -> . RAT
-    (7) num -> . COMPX
-
-    ID              shift and go to state 7
-    DEF             shift and go to state 8
-    IF              shift and go to state 9
-    UNLESS          shift and go to state 10
-    CASE            shift and go to state 11
-    INT             shift and go to state 13
-    FLOAT           shift and go to state 14
-    RAT             shift and go to state 15
-    COMPX           shift and go to state 16
-
-    cmmd                           shift and go to state 86
-    var                            shift and go to state 3
-    func                           shift and go to state 4
-    control                        shift and go to state 5
-    optn                           shift and go to state 6
-    num                            shift and go to state 12
-
-state 61
-
-    (44) control -> UNLESS bool cmmd . elses END
-    (35) elses -> . else
-    (36) elses -> . elsif elses
-    (31) else -> . ELSE comptn cmmd
-    (32) else -> . ELSE bool cmmd
-    (33) elsif -> . ELSIF comptn cmmd
-    (34) elsif -> . ELSIF bool cmmd
-
-    ELSE            shift and go to state 75
-    ELSIF           shift and go to state 76
-
-    elses                          shift and go to state 87
-    else                           shift and go to state 73
-    elsif                          shift and go to state 74
-
-state 62
-
-    (50) control -> CASE ID whens . else END
-    (51) control -> CASE ID whens . END
-    (31) else -> . ELSE comptn cmmd
-    (32) else -> . ELSE bool cmmd
-
-    END             shift and go to state 89
-    ELSE            shift and go to state 75
-
-    else                           shift and go to state 88
-
-state 63
-
-    (48) whens -> when .
-    (49) whens -> when . whens
-    (48) whens -> . when
-    (49) whens -> . when whens
-    (45) when -> . WHEN objs
-    (46) when -> . WHEN objs THEN
-    (47) when -> . WHEN comptn
-
-    END             reduce using rule 48 (whens -> when .)
-    ELSE            reduce using rule 48 (whens -> when .)
-    WHEN            shift and go to state 64
-
-    when                           shift and go to state 63
-    whens                          shift and go to state 90
-
-state 64
-
-    (45) when -> WHEN . objs
-    (46) when -> WHEN . objs THEN
-    (47) when -> WHEN . comptn
+    (54) array -> LBRAKET . objs RBRAKET
+    (55) array -> LBRAKET . ids RBRAKET
+    (56) array -> LBRAKET . objs COMMA ids RBRAKET
+    (57) array -> LBRAKET . ids COMMA objs RBRAKET
     (62) objs -> . obj
     (63) objs -> . obj COMMA objs
-    (15) comptn -> . obj comptr obj
+    (52) ids -> . ID
+    (53) ids -> . ID COMMA ids
     (64) obj -> . STRING
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
+    ID              shift and go to state 92
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    objs                           shift and go to state 91
-    comptn                         shift and go to state 92
-    obj                            shift and go to state 93
+    objs                           shift and go to state 90
+    ids                            shift and go to state 91
+    obj                            shift and go to state 74
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 65
+state 61
 
-    (14) optn -> num optr num .
+    (77) matrix -> LBRAKET rows . RBRAKET
 
-    $end            reduce using rule 14 (optn -> num optr num .)
-    END             reduce using rule 14 (optn -> num optr num .)
-    RETURN          reduce using rule 14 (optn -> num optr num .)
-    ELSE            reduce using rule 14 (optn -> num optr num .)
-    ELSIF           reduce using rule 14 (optn -> num optr num .)
+    RBRAKET         shift and go to state 93
 
 
-state 66
+state 62
 
-    (25) func -> DEF ID LPAREN objs . RPAREN cmmd END
-    (28) func -> DEF ID LPAREN objs . RPAREN cmmd RETURN obj END
+    (78) rows -> row .
+    (79) rows -> row . COMMA rows
 
-    RPAREN          shift and go to state 94
+    RBRAKET         reduce using rule 78 (rows -> row .)
+    COMMA           shift and go to state 94
 
 
-state 67
+state 63
 
-    (26) func -> DEF ID LPAREN RPAREN . cmmd END
-    (29) func -> DEF ID LPAREN RPAREN . cmmd RETURN obj END
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (80) row -> array .
+
+    COMMA           reduce using rule 80 (row -> array .)
+    RBRAKET         reduce using rule 80 (row -> array .)
+
+
+state 64
+
+    (41) control -> UNLESS comptn COLON . cmmd END
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -1754,20 +1697,248 @@ state 67
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
+state 65
+
+    (43) control -> UNLESS comptn cmmd . elses END
+    (35) elses -> . else
+    (36) elses -> . elsif elses
+    (31) else -> . ELSE comptn cmmd
+    (32) else -> . ELSE bool cmmd
+    (33) elsif -> . ELSIF comptn cmmd
+    (34) elsif -> . ELSIF bool cmmd
+
+    ELSE            shift and go to state 81
+    ELSIF           shift and go to state 82
+
+    elses                          shift and go to state 96
+    else                           shift and go to state 79
+    elsif                          shift and go to state 80
+
+state 66
+
+    (42) control -> UNLESS bool COLON . cmmd END
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
+    (22) var -> . ID EQUALS obj
+    (23) var -> . ID EQUALS ID
+    (24) var -> . ID EQUALS NIL
+    (25) func -> . DEF ID LPAREN objs RPAREN cmmd END
+    (26) func -> . DEF ID LPAREN RPAREN cmmd END
+    (27) func -> . DEF ID cmmd END
+    (28) func -> . DEF ID LPAREN objs RPAREN cmmd RETURN obj END
+    (29) func -> . DEF ID LPAREN RPAREN cmmd RETURN obj END
+    (30) func -> . DEF ID cmmd RETURN obj END
+    (37) control -> . IF comptn cmmd END
+    (38) control -> . IF bool cmmd END
+    (39) control -> . IF comptn cmmd elses END
+    (40) control -> . IF bool cmmd elses END
+    (41) control -> . UNLESS comptn COLON cmmd END
+    (42) control -> . UNLESS bool COLON cmmd END
+    (43) control -> . UNLESS comptn cmmd elses END
+    (44) control -> . UNLESS bool cmmd elses END
+    (50) control -> . CASE ID whens else END
+    (51) control -> . CASE ID whens END
+    (14) optn -> . num optr num
+    (4) num -> . INT
+    (5) num -> . FLOAT
+    (6) num -> . RAT
+    (7) num -> . COMPX
+
+    ID              shift and go to state 7
+    DEF             shift and go to state 8
+    IF              shift and go to state 9
+    UNLESS          shift and go to state 10
+    CASE            shift and go to state 11
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
+    RAT             shift and go to state 15
+    COMPX           shift and go to state 16
+
+    cmmd                           shift and go to state 97
+    var                            shift and go to state 3
+    func                           shift and go to state 4
+    control                        shift and go to state 5
+    optn                           shift and go to state 6
+    num                            shift and go to state 12
+
+state 67
+
+    (44) control -> UNLESS bool cmmd . elses END
+    (35) elses -> . else
+    (36) elses -> . elsif elses
+    (31) else -> . ELSE comptn cmmd
+    (32) else -> . ELSE bool cmmd
+    (33) elsif -> . ELSIF comptn cmmd
+    (34) elsif -> . ELSIF bool cmmd
+
+    ELSE            shift and go to state 81
+    ELSIF           shift and go to state 82
+
+    elses                          shift and go to state 98
+    else                           shift and go to state 79
+    elsif                          shift and go to state 80
+
 state 68
+
+    (50) control -> CASE ID whens . else END
+    (51) control -> CASE ID whens . END
+    (31) else -> . ELSE comptn cmmd
+    (32) else -> . ELSE bool cmmd
+
+    END             shift and go to state 100
+    ELSE            shift and go to state 81
+
+    else                           shift and go to state 99
+
+state 69
+
+    (48) whens -> when .
+    (49) whens -> when . whens
+    (48) whens -> . when
+    (49) whens -> . when whens
+    (45) when -> . WHEN objs
+    (46) when -> . WHEN objs THEN
+    (47) when -> . WHEN comptn
+
+    END             reduce using rule 48 (whens -> when .)
+    ELSE            reduce using rule 48 (whens -> when .)
+    WHEN            shift and go to state 70
+
+    when                           shift and go to state 69
+    whens                          shift and go to state 101
+
+state 70
+
+    (45) when -> WHEN . objs
+    (46) when -> WHEN . objs THEN
+    (47) when -> WHEN . comptn
+    (62) objs -> . obj
+    (63) objs -> . obj COMMA objs
+    (15) comptn -> . obj comptr obj
+    (64) obj -> . STRING
+    (65) obj -> . num
+    (66) obj -> . bool
+    (67) obj -> . range
+    (68) obj -> . matrix
+    (4) num -> . INT
+    (5) num -> . FLOAT
+    (6) num -> . RAT
+    (7) num -> . COMPX
+    (2) bool -> . TRUE
+    (3) bool -> . FALSE
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
+
+    STRING          shift and go to state 24
+    INT             shift and go to state 28
+    FLOAT           shift and go to state 14
+    RAT             shift and go to state 15
+    COMPX           shift and go to state 16
+    TRUE            shift and go to state 22
+    FALSE           shift and go to state 23
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
+
+    objs                           shift and go to state 102
+    comptn                         shift and go to state 103
+    obj                            shift and go to state 104
+    num                            shift and go to state 25
+    bool                           shift and go to state 44
+    range                          shift and go to state 26
+    matrix                         shift and go to state 27
+
+state 71
+
+    (14) optn -> num optr num .
+
+    $end            reduce using rule 14 (optn -> num optr num .)
+    END             reduce using rule 14 (optn -> num optr num .)
+    RETURN          reduce using rule 14 (optn -> num optr num .)
+    ELSE            reduce using rule 14 (optn -> num optr num .)
+    ELSIF           reduce using rule 14 (optn -> num optr num .)
+
+
+state 72
+
+    (25) func -> DEF ID LPAREN objs . RPAREN cmmd END
+    (28) func -> DEF ID LPAREN objs . RPAREN cmmd RETURN obj END
+
+    RPAREN          shift and go to state 105
+
+
+state 73
+
+    (26) func -> DEF ID LPAREN RPAREN . cmmd END
+    (29) func -> DEF ID LPAREN RPAREN . cmmd RETURN obj END
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
+    (22) var -> . ID EQUALS obj
+    (23) var -> . ID EQUALS ID
+    (24) var -> . ID EQUALS NIL
+    (25) func -> . DEF ID LPAREN objs RPAREN cmmd END
+    (26) func -> . DEF ID LPAREN RPAREN cmmd END
+    (27) func -> . DEF ID cmmd END
+    (28) func -> . DEF ID LPAREN objs RPAREN cmmd RETURN obj END
+    (29) func -> . DEF ID LPAREN RPAREN cmmd RETURN obj END
+    (30) func -> . DEF ID cmmd RETURN obj END
+    (37) control -> . IF comptn cmmd END
+    (38) control -> . IF bool cmmd END
+    (39) control -> . IF comptn cmmd elses END
+    (40) control -> . IF bool cmmd elses END
+    (41) control -> . UNLESS comptn COLON cmmd END
+    (42) control -> . UNLESS bool COLON cmmd END
+    (43) control -> . UNLESS comptn cmmd elses END
+    (44) control -> . UNLESS bool cmmd elses END
+    (50) control -> . CASE ID whens else END
+    (51) control -> . CASE ID whens END
+    (14) optn -> . num optr num
+    (4) num -> . INT
+    (5) num -> . FLOAT
+    (6) num -> . RAT
+    (7) num -> . COMPX
+
+    ID              shift and go to state 7
+    DEF             shift and go to state 8
+    IF              shift and go to state 9
+    UNLESS          shift and go to state 10
+    CASE            shift and go to state 11
+    INT             shift and go to state 13
+    FLOAT           shift and go to state 14
+    RAT             shift and go to state 15
+    COMPX           shift and go to state 16
+
+    cmmd                           shift and go to state 106
+    var                            shift and go to state 3
+    func                           shift and go to state 4
+    control                        shift and go to state 5
+    optn                           shift and go to state 6
+    num                            shift and go to state 12
+
+state 74
 
     (62) objs -> obj .
     (63) objs -> obj . COMMA objs
 
+  ! shift/reduce conflict for COMMA resolved as shift
     RPAREN          reduce using rule 62 (objs -> obj .)
+    RBRAKET         reduce using rule 62 (objs -> obj .)
     THEN            reduce using rule 62 (objs -> obj .)
     WHEN            reduce using rule 62 (objs -> obj .)
     END             reduce using rule 62 (objs -> obj .)
     ELSE            reduce using rule 62 (objs -> obj .)
-    COMMA           shift and go to state 96
+    COMMA           shift and go to state 107
+
+  ! COMMA           [ reduce using rule 62 (objs -> obj .) ]
 
 
-state 69
+state 75
 
     (27) func -> DEF ID cmmd END .
 
@@ -1778,39 +1949,43 @@ state 69
     ELSIF           reduce using rule 27 (func -> DEF ID cmmd END .)
 
 
-state 70
+state 76
 
     (30) func -> DEF ID cmmd RETURN . obj END
     (64) obj -> . STRING
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    obj                            shift and go to state 97
+    obj                            shift and go to state 108
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 71
+state 77
 
     (37) control -> IF comptn cmmd END .
 
@@ -1821,21 +1996,21 @@ state 71
     ELSIF           reduce using rule 37 (control -> IF comptn cmmd END .)
 
 
-state 72
+state 78
 
     (39) control -> IF comptn cmmd elses . END
 
-    END             shift and go to state 98
+    END             shift and go to state 109
 
 
-state 73
+state 79
 
     (35) elses -> else .
 
     END             reduce using rule 35 (elses -> else .)
 
 
-state 74
+state 80
 
     (36) elses -> elsif . elses
     (35) elses -> . else
@@ -1845,14 +2020,14 @@ state 74
     (33) elsif -> . ELSIF comptn cmmd
     (34) elsif -> . ELSIF bool cmmd
 
-    ELSE            shift and go to state 75
-    ELSIF           shift and go to state 76
+    ELSE            shift and go to state 81
+    ELSIF           shift and go to state 82
 
-    elsif                          shift and go to state 74
-    elses                          shift and go to state 99
-    else                           shift and go to state 73
+    elsif                          shift and go to state 80
+    elses                          shift and go to state 110
+    else                           shift and go to state 79
 
-state 75
+state 81
 
     (31) else -> ELSE . comptn cmmd
     (32) else -> ELSE . bool cmmd
@@ -1863,31 +2038,35 @@ state 75
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    comptn                         shift and go to state 100
-    bool                           shift and go to state 101
+    comptn                         shift and go to state 111
+    bool                           shift and go to state 112
     obj                            shift and go to state 21
     num                            shift and go to state 25
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 76
+state 82
 
     (33) elsif -> ELSIF . comptn cmmd
     (34) elsif -> ELSIF . bool cmmd
@@ -1898,31 +2077,35 @@ state 76
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    comptn                         shift and go to state 102
-    bool                           shift and go to state 103
+    comptn                         shift and go to state 113
+    bool                           shift and go to state 114
     obj                            shift and go to state 21
     num                            shift and go to state 25
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 77
+state 83
 
     (38) control -> IF bool cmmd END .
 
@@ -1933,14 +2116,14 @@ state 77
     ELSIF           reduce using rule 38 (control -> IF bool cmmd END .)
 
 
-state 78
+state 84
 
     (40) control -> IF bool cmmd elses . END
 
-    END             shift and go to state 104
+    END             shift and go to state 115
 
 
-state 79
+state 85
 
     (15) comptn -> obj comptr obj .
 
@@ -1959,70 +2142,149 @@ state 79
     ELSE            reduce using rule 15 (comptn -> obj comptr obj .)
 
 
-state 80
-
-    (71) range -> STRING DOT DOT . STRING
-
-    STRING          shift and go to state 105
-
-
-state 81
-
-    (69) range -> INT DOT DOT . INT
-
-    INT             shift and go to state 106
-
-
-state 82
-
-    (68) range -> LPAREN INT DOT . DOT INT RPAREN
-
-    DOT             shift and go to state 107
-
-
-state 83
-
-    (70) range -> LPAREN STRING DOT . DOT STRING
-
-    DOT             shift and go to state 108
-
-
-state 84
-
-    (41) control -> UNLESS comptn COLON cmmd . END
-
-    END             shift and go to state 109
-
-
-state 85
-
-    (43) control -> UNLESS comptn cmmd elses . END
-
-    END             shift and go to state 110
-
-
 state 86
 
-    (42) control -> UNLESS bool COLON cmmd . END
+    (72) range -> STRING DOT DOT . STRING
 
-    END             shift and go to state 111
+    STRING          shift and go to state 116
 
 
 state 87
 
-    (44) control -> UNLESS bool cmmd elses . END
+    (70) range -> INT DOT DOT . INT
 
-    END             shift and go to state 112
+    INT             shift and go to state 117
 
 
 state 88
 
-    (50) control -> CASE ID whens else . END
+    (69) range -> LPAREN INT DOT . DOT INT RPAREN
 
-    END             shift and go to state 113
+    DOT             shift and go to state 118
 
 
 state 89
+
+    (71) range -> LPAREN STRING DOT . DOT STRING
+
+    DOT             shift and go to state 119
+
+
+state 90
+
+    (54) array -> LBRAKET objs . RBRAKET
+    (56) array -> LBRAKET objs . COMMA ids RBRAKET
+
+    RBRAKET         shift and go to state 120
+    COMMA           shift and go to state 121
+
+
+state 91
+
+    (55) array -> LBRAKET ids . RBRAKET
+    (57) array -> LBRAKET ids . COMMA objs RBRAKET
+
+    RBRAKET         shift and go to state 122
+    COMMA           shift and go to state 123
+
+
+state 92
+
+    (52) ids -> ID .
+    (53) ids -> ID . COMMA ids
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    RBRAKET         reduce using rule 52 (ids -> ID .)
+    COMMA           shift and go to state 124
+
+  ! COMMA           [ reduce using rule 52 (ids -> ID .) ]
+
+
+state 93
+
+    (77) matrix -> LBRAKET rows RBRAKET .
+
+    EQCOMP          reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    LESSTH          reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    LESSEQTH        reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    GREATH          reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    GREATEQTH       reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    NOTEQ           reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    $end            reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    END             reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    RETURN          reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    ELSE            reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    ELSIF           reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    COMMA           reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    RPAREN          reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    ID              reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    DEF             reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    IF              reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    UNLESS          reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    CASE            reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    INT             reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    FLOAT           reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    RAT             reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    COMPX           reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    COLON           reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    WHEN            reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    RBRAKET         reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+    THEN            reduce using rule 77 (matrix -> LBRAKET rows RBRAKET .)
+
+
+state 94
+
+    (79) rows -> row COMMA . rows
+    (78) rows -> . row
+    (79) rows -> . row COMMA rows
+    (80) row -> . array
+    (54) array -> . LBRAKET objs RBRAKET
+    (55) array -> . LBRAKET ids RBRAKET
+    (56) array -> . LBRAKET objs COMMA ids RBRAKET
+    (57) array -> . LBRAKET ids COMMA objs RBRAKET
+
+    LBRAKET         shift and go to state 60
+
+    row                            shift and go to state 62
+    rows                           shift and go to state 125
+    array                          shift and go to state 63
+
+state 95
+
+    (41) control -> UNLESS comptn COLON cmmd . END
+
+    END             shift and go to state 126
+
+
+state 96
+
+    (43) control -> UNLESS comptn cmmd elses . END
+
+    END             shift and go to state 127
+
+
+state 97
+
+    (42) control -> UNLESS bool COLON cmmd . END
+
+    END             shift and go to state 128
+
+
+state 98
+
+    (44) control -> UNLESS bool cmmd elses . END
+
+    END             shift and go to state 129
+
+
+state 99
+
+    (50) control -> CASE ID whens else . END
+
+    END             shift and go to state 130
+
+
+state 100
 
     (51) control -> CASE ID whens END .
 
@@ -2033,7 +2295,7 @@ state 89
     ELSIF           reduce using rule 51 (control -> CASE ID whens END .)
 
 
-state 90
+state 101
 
     (49) whens -> when whens .
 
@@ -2041,7 +2303,7 @@ state 90
     ELSE            reduce using rule 49 (whens -> when whens .)
 
 
-state 91
+state 102
 
     (45) when -> WHEN objs .
     (46) when -> WHEN objs . THEN
@@ -2049,10 +2311,10 @@ state 91
     WHEN            reduce using rule 45 (when -> WHEN objs .)
     END             reduce using rule 45 (when -> WHEN objs .)
     ELSE            reduce using rule 45 (when -> WHEN objs .)
-    THEN            shift and go to state 114
+    THEN            shift and go to state 131
 
 
-state 92
+state 103
 
     (47) when -> WHEN comptn .
 
@@ -2061,7 +2323,7 @@ state 92
     ELSE            reduce using rule 47 (when -> WHEN comptn .)
 
 
-state 93
+state 104
 
     (62) objs -> obj .
     (63) objs -> obj . COMMA objs
@@ -2077,24 +2339,24 @@ state 93
     WHEN            reduce using rule 62 (objs -> obj .)
     END             reduce using rule 62 (objs -> obj .)
     ELSE            reduce using rule 62 (objs -> obj .)
-    COMMA           shift and go to state 96
-    EQCOMP          shift and go to state 48
-    LESSTH          shift and go to state 49
-    LESSEQTH        shift and go to state 50
-    GREATH          shift and go to state 51
-    GREATEQTH       shift and go to state 52
-    NOTEQ           shift and go to state 53
+    COMMA           shift and go to state 107
+    EQCOMP          shift and go to state 50
+    LESSTH          shift and go to state 51
+    LESSEQTH        shift and go to state 52
+    GREATH          shift and go to state 53
+    GREATEQTH       shift and go to state 54
+    NOTEQ           shift and go to state 55
 
-    comptr                         shift and go to state 47
+    comptr                         shift and go to state 49
 
-state 94
+state 105
 
     (25) func -> DEF ID LPAREN objs RPAREN . cmmd END
     (28) func -> DEF ID LPAREN objs RPAREN . cmmd RETURN obj END
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -2130,23 +2392,23 @@ state 94
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 115
+    cmmd                           shift and go to state 132
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
-state 95
+state 106
 
     (26) func -> DEF ID LPAREN RPAREN cmmd . END
     (29) func -> DEF ID LPAREN RPAREN cmmd . RETURN obj END
 
-    END             shift and go to state 116
-    RETURN          shift and go to state 117
+    END             shift and go to state 133
+    RETURN          shift and go to state 134
 
 
-state 96
+state 107
 
     (63) objs -> obj COMMA . objs
     (62) objs -> . obj
@@ -2155,40 +2417,44 @@ state 96
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    obj                            shift and go to state 68
-    objs                           shift and go to state 118
+    obj                            shift and go to state 74
+    objs                           shift and go to state 135
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 97
+state 108
 
     (30) func -> DEF ID cmmd RETURN obj . END
 
-    END             shift and go to state 119
+    END             shift and go to state 136
 
 
-state 98
+state 109
 
     (39) control -> IF comptn cmmd elses END .
 
@@ -2199,20 +2465,20 @@ state 98
     ELSIF           reduce using rule 39 (control -> IF comptn cmmd elses END .)
 
 
-state 99
+state 110
 
     (36) elses -> elsif elses .
 
     END             reduce using rule 36 (elses -> elsif elses .)
 
 
-state 100
+state 111
 
     (31) else -> ELSE comptn . cmmd
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -2248,21 +2514,21 @@ state 100
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 120
+    cmmd                           shift and go to state 137
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
-state 101
+state 112
 
     (32) else -> ELSE bool . cmmd
     (66) obj -> bool .
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -2304,20 +2570,20 @@ state 101
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 121
+    cmmd                           shift and go to state 138
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
-state 102
+state 113
 
     (33) elsif -> ELSIF comptn . cmmd
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -2353,21 +2619,21 @@ state 102
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 122
+    cmmd                           shift and go to state 139
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
-state 103
+state 114
 
     (34) elsif -> ELSIF bool . cmmd
     (66) obj -> bool .
-    (72) cmmd -> . var
-    (73) cmmd -> . func
-    (74) cmmd -> . control
-    (75) cmmd -> . optn
+    (73) cmmd -> . var
+    (74) cmmd -> . func
+    (75) cmmd -> . control
+    (76) cmmd -> . optn
     (22) var -> . ID EQUALS obj
     (23) var -> . ID EQUALS ID
     (24) var -> . ID EQUALS NIL
@@ -2409,14 +2675,14 @@ state 103
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
 
-    cmmd                           shift and go to state 123
+    cmmd                           shift and go to state 140
     var                            shift and go to state 3
     func                           shift and go to state 4
     control                        shift and go to state 5
     optn                           shift and go to state 6
     num                            shift and go to state 12
 
-state 104
+state 115
 
     (40) control -> IF bool cmmd elses END .
 
@@ -2427,83 +2693,167 @@ state 104
     ELSIF           reduce using rule 40 (control -> IF bool cmmd elses END .)
 
 
-state 105
+state 116
 
-    (71) range -> STRING DOT DOT STRING .
+    (72) range -> STRING DOT DOT STRING .
 
-    EQCOMP          reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    LESSTH          reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    LESSEQTH        reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    GREATH          reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    GREATEQTH       reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    NOTEQ           reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    $end            reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    END             reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    RETURN          reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    ELSE            reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    ELSIF           reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    COMMA           reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    RPAREN          reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    ID              reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    DEF             reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    IF              reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    UNLESS          reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    CASE            reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    INT             reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    FLOAT           reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    RAT             reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    COMPX           reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    COLON           reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    WHEN            reduce using rule 71 (range -> STRING DOT DOT STRING .)
-    THEN            reduce using rule 71 (range -> STRING DOT DOT STRING .)
-
-
-state 106
-
-    (69) range -> INT DOT DOT INT .
-
-    EQCOMP          reduce using rule 69 (range -> INT DOT DOT INT .)
-    LESSTH          reduce using rule 69 (range -> INT DOT DOT INT .)
-    LESSEQTH        reduce using rule 69 (range -> INT DOT DOT INT .)
-    GREATH          reduce using rule 69 (range -> INT DOT DOT INT .)
-    GREATEQTH       reduce using rule 69 (range -> INT DOT DOT INT .)
-    NOTEQ           reduce using rule 69 (range -> INT DOT DOT INT .)
-    $end            reduce using rule 69 (range -> INT DOT DOT INT .)
-    END             reduce using rule 69 (range -> INT DOT DOT INT .)
-    RETURN          reduce using rule 69 (range -> INT DOT DOT INT .)
-    ELSE            reduce using rule 69 (range -> INT DOT DOT INT .)
-    ELSIF           reduce using rule 69 (range -> INT DOT DOT INT .)
-    COMMA           reduce using rule 69 (range -> INT DOT DOT INT .)
-    RPAREN          reduce using rule 69 (range -> INT DOT DOT INT .)
-    ID              reduce using rule 69 (range -> INT DOT DOT INT .)
-    DEF             reduce using rule 69 (range -> INT DOT DOT INT .)
-    IF              reduce using rule 69 (range -> INT DOT DOT INT .)
-    UNLESS          reduce using rule 69 (range -> INT DOT DOT INT .)
-    CASE            reduce using rule 69 (range -> INT DOT DOT INT .)
-    INT             reduce using rule 69 (range -> INT DOT DOT INT .)
-    FLOAT           reduce using rule 69 (range -> INT DOT DOT INT .)
-    RAT             reduce using rule 69 (range -> INT DOT DOT INT .)
-    COMPX           reduce using rule 69 (range -> INT DOT DOT INT .)
-    COLON           reduce using rule 69 (range -> INT DOT DOT INT .)
-    WHEN            reduce using rule 69 (range -> INT DOT DOT INT .)
-    THEN            reduce using rule 69 (range -> INT DOT DOT INT .)
+    EQCOMP          reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    LESSTH          reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    LESSEQTH        reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    GREATH          reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    GREATEQTH       reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    NOTEQ           reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    $end            reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    END             reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    RETURN          reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    ELSE            reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    ELSIF           reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    COMMA           reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    RPAREN          reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    ID              reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    DEF             reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    IF              reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    UNLESS          reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    CASE            reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    INT             reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    FLOAT           reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    RAT             reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    COMPX           reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    COLON           reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    WHEN            reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    RBRAKET         reduce using rule 72 (range -> STRING DOT DOT STRING .)
+    THEN            reduce using rule 72 (range -> STRING DOT DOT STRING .)
 
 
-state 107
+state 117
 
-    (68) range -> LPAREN INT DOT DOT . INT RPAREN
+    (70) range -> INT DOT DOT INT .
 
-    INT             shift and go to state 124
+    EQCOMP          reduce using rule 70 (range -> INT DOT DOT INT .)
+    LESSTH          reduce using rule 70 (range -> INT DOT DOT INT .)
+    LESSEQTH        reduce using rule 70 (range -> INT DOT DOT INT .)
+    GREATH          reduce using rule 70 (range -> INT DOT DOT INT .)
+    GREATEQTH       reduce using rule 70 (range -> INT DOT DOT INT .)
+    NOTEQ           reduce using rule 70 (range -> INT DOT DOT INT .)
+    $end            reduce using rule 70 (range -> INT DOT DOT INT .)
+    END             reduce using rule 70 (range -> INT DOT DOT INT .)
+    RETURN          reduce using rule 70 (range -> INT DOT DOT INT .)
+    ELSE            reduce using rule 70 (range -> INT DOT DOT INT .)
+    ELSIF           reduce using rule 70 (range -> INT DOT DOT INT .)
+    COMMA           reduce using rule 70 (range -> INT DOT DOT INT .)
+    RPAREN          reduce using rule 70 (range -> INT DOT DOT INT .)
+    ID              reduce using rule 70 (range -> INT DOT DOT INT .)
+    DEF             reduce using rule 70 (range -> INT DOT DOT INT .)
+    IF              reduce using rule 70 (range -> INT DOT DOT INT .)
+    UNLESS          reduce using rule 70 (range -> INT DOT DOT INT .)
+    CASE            reduce using rule 70 (range -> INT DOT DOT INT .)
+    INT             reduce using rule 70 (range -> INT DOT DOT INT .)
+    FLOAT           reduce using rule 70 (range -> INT DOT DOT INT .)
+    RAT             reduce using rule 70 (range -> INT DOT DOT INT .)
+    COMPX           reduce using rule 70 (range -> INT DOT DOT INT .)
+    COLON           reduce using rule 70 (range -> INT DOT DOT INT .)
+    WHEN            reduce using rule 70 (range -> INT DOT DOT INT .)
+    RBRAKET         reduce using rule 70 (range -> INT DOT DOT INT .)
+    THEN            reduce using rule 70 (range -> INT DOT DOT INT .)
 
 
-state 108
+state 118
 
-    (70) range -> LPAREN STRING DOT DOT . STRING
+    (69) range -> LPAREN INT DOT DOT . INT RPAREN
 
-    STRING          shift and go to state 125
+    INT             shift and go to state 141
 
 
-state 109
+state 119
+
+    (71) range -> LPAREN STRING DOT DOT . STRING
+
+    STRING          shift and go to state 142
+
+
+state 120
+
+    (54) array -> LBRAKET objs RBRAKET .
+
+    COMMA           reduce using rule 54 (array -> LBRAKET objs RBRAKET .)
+    RBRAKET         reduce using rule 54 (array -> LBRAKET objs RBRAKET .)
+
+
+state 121
+
+    (56) array -> LBRAKET objs COMMA . ids RBRAKET
+    (52) ids -> . ID
+    (53) ids -> . ID COMMA ids
+
+    ID              shift and go to state 92
+
+    ids                            shift and go to state 143
+
+state 122
+
+    (55) array -> LBRAKET ids RBRAKET .
+
+    COMMA           reduce using rule 55 (array -> LBRAKET ids RBRAKET .)
+    RBRAKET         reduce using rule 55 (array -> LBRAKET ids RBRAKET .)
+
+
+state 123
+
+    (57) array -> LBRAKET ids COMMA . objs RBRAKET
+    (62) objs -> . obj
+    (63) objs -> . obj COMMA objs
+    (64) obj -> . STRING
+    (65) obj -> . num
+    (66) obj -> . bool
+    (67) obj -> . range
+    (68) obj -> . matrix
+    (4) num -> . INT
+    (5) num -> . FLOAT
+    (6) num -> . RAT
+    (7) num -> . COMPX
+    (2) bool -> . TRUE
+    (3) bool -> . FALSE
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
+
+    STRING          shift and go to state 24
+    INT             shift and go to state 28
+    FLOAT           shift and go to state 14
+    RAT             shift and go to state 15
+    COMPX           shift and go to state 16
+    TRUE            shift and go to state 22
+    FALSE           shift and go to state 23
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
+
+    objs                           shift and go to state 144
+    obj                            shift and go to state 74
+    num                            shift and go to state 25
+    bool                           shift and go to state 44
+    range                          shift and go to state 26
+    matrix                         shift and go to state 27
+
+state 124
+
+    (53) ids -> ID COMMA . ids
+    (52) ids -> . ID
+    (53) ids -> . ID COMMA ids
+
+    ID              shift and go to state 92
+
+    ids                            shift and go to state 145
+
+state 125
+
+    (79) rows -> row COMMA rows .
+
+    RBRAKET         reduce using rule 79 (rows -> row COMMA rows .)
+
+
+state 126
 
     (41) control -> UNLESS comptn COLON cmmd END .
 
@@ -2514,7 +2864,7 @@ state 109
     ELSIF           reduce using rule 41 (control -> UNLESS comptn COLON cmmd END .)
 
 
-state 110
+state 127
 
     (43) control -> UNLESS comptn cmmd elses END .
 
@@ -2525,7 +2875,7 @@ state 110
     ELSIF           reduce using rule 43 (control -> UNLESS comptn cmmd elses END .)
 
 
-state 111
+state 128
 
     (42) control -> UNLESS bool COLON cmmd END .
 
@@ -2536,7 +2886,7 @@ state 111
     ELSIF           reduce using rule 42 (control -> UNLESS bool COLON cmmd END .)
 
 
-state 112
+state 129
 
     (44) control -> UNLESS bool cmmd elses END .
 
@@ -2547,7 +2897,7 @@ state 112
     ELSIF           reduce using rule 44 (control -> UNLESS bool cmmd elses END .)
 
 
-state 113
+state 130
 
     (50) control -> CASE ID whens else END .
 
@@ -2558,7 +2908,7 @@ state 113
     ELSIF           reduce using rule 50 (control -> CASE ID whens else END .)
 
 
-state 114
+state 131
 
     (46) when -> WHEN objs THEN .
 
@@ -2567,16 +2917,16 @@ state 114
     ELSE            reduce using rule 46 (when -> WHEN objs THEN .)
 
 
-state 115
+state 132
 
     (25) func -> DEF ID LPAREN objs RPAREN cmmd . END
     (28) func -> DEF ID LPAREN objs RPAREN cmmd . RETURN obj END
 
-    END             shift and go to state 126
-    RETURN          shift and go to state 127
+    END             shift and go to state 146
+    RETURN          shift and go to state 147
 
 
-state 116
+state 133
 
     (26) func -> DEF ID LPAREN RPAREN cmmd END .
 
@@ -2587,50 +2937,56 @@ state 116
     ELSIF           reduce using rule 26 (func -> DEF ID LPAREN RPAREN cmmd END .)
 
 
-state 117
+state 134
 
     (29) func -> DEF ID LPAREN RPAREN cmmd RETURN . obj END
     (64) obj -> . STRING
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    obj                            shift and go to state 128
+    obj                            shift and go to state 148
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 118
+state 135
 
     (63) objs -> obj COMMA objs .
 
     RPAREN          reduce using rule 63 (objs -> obj COMMA objs .)
+    RBRAKET         reduce using rule 63 (objs -> obj COMMA objs .)
+    COMMA           reduce using rule 63 (objs -> obj COMMA objs .)
     THEN            reduce using rule 63 (objs -> obj COMMA objs .)
     WHEN            reduce using rule 63 (objs -> obj COMMA objs .)
     END             reduce using rule 63 (objs -> obj COMMA objs .)
     ELSE            reduce using rule 63 (objs -> obj COMMA objs .)
 
 
-state 119
+state 136
 
     (30) func -> DEF ID cmmd RETURN obj END .
 
@@ -2641,21 +2997,21 @@ state 119
     ELSIF           reduce using rule 30 (func -> DEF ID cmmd RETURN obj END .)
 
 
-state 120
+state 137
 
     (31) else -> ELSE comptn cmmd .
 
     END             reduce using rule 31 (else -> ELSE comptn cmmd .)
 
 
-state 121
+state 138
 
     (32) else -> ELSE bool cmmd .
 
     END             reduce using rule 32 (else -> ELSE bool cmmd .)
 
 
-state 122
+state 139
 
     (33) elsif -> ELSIF comptn cmmd .
 
@@ -2663,7 +3019,7 @@ state 122
     ELSIF           reduce using rule 33 (elsif -> ELSIF comptn cmmd .)
 
 
-state 123
+state 140
 
     (34) elsif -> ELSIF bool cmmd .
 
@@ -2671,45 +3027,68 @@ state 123
     ELSIF           reduce using rule 34 (elsif -> ELSIF bool cmmd .)
 
 
-state 124
+state 141
 
-    (68) range -> LPAREN INT DOT DOT INT . RPAREN
+    (69) range -> LPAREN INT DOT DOT INT . RPAREN
 
-    RPAREN          shift and go to state 129
-
-
-state 125
-
-    (70) range -> LPAREN STRING DOT DOT STRING .
-
-    EQCOMP          reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    LESSTH          reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    LESSEQTH        reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    GREATH          reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    GREATEQTH       reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    NOTEQ           reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    $end            reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    END             reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    RETURN          reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    ELSE            reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    ELSIF           reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    COMMA           reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    RPAREN          reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    ID              reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    DEF             reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    IF              reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    UNLESS          reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    CASE            reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    INT             reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    FLOAT           reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    RAT             reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    COMPX           reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    COLON           reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    WHEN            reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
-    THEN            reduce using rule 70 (range -> LPAREN STRING DOT DOT STRING .)
+    RPAREN          shift and go to state 149
 
 
-state 126
+state 142
+
+    (71) range -> LPAREN STRING DOT DOT STRING .
+
+    EQCOMP          reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    LESSTH          reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    LESSEQTH        reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    GREATH          reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    GREATEQTH       reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    NOTEQ           reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    $end            reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    END             reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    RETURN          reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    ELSE            reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    ELSIF           reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    COMMA           reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    RPAREN          reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    ID              reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    DEF             reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    IF              reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    UNLESS          reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    CASE            reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    INT             reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    FLOAT           reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    RAT             reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    COMPX           reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    COLON           reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    WHEN            reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    RBRAKET         reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+    THEN            reduce using rule 71 (range -> LPAREN STRING DOT DOT STRING .)
+
+
+state 143
+
+    (56) array -> LBRAKET objs COMMA ids . RBRAKET
+
+    RBRAKET         shift and go to state 150
+
+
+state 144
+
+    (57) array -> LBRAKET ids COMMA objs . RBRAKET
+
+    RBRAKET         shift and go to state 151
+
+
+state 145
+
+    (53) ids -> ID COMMA ids .
+
+    RBRAKET         reduce using rule 53 (ids -> ID COMMA ids .)
+    COMMA           reduce using rule 53 (ids -> ID COMMA ids .)
+
+
+state 146
 
     (25) func -> DEF ID LPAREN objs RPAREN cmmd END .
 
@@ -2720,84 +3099,105 @@ state 126
     ELSIF           reduce using rule 25 (func -> DEF ID LPAREN objs RPAREN cmmd END .)
 
 
-state 127
+state 147
 
     (28) func -> DEF ID LPAREN objs RPAREN cmmd RETURN . obj END
     (64) obj -> . STRING
     (65) obj -> . num
     (66) obj -> . bool
     (67) obj -> . range
+    (68) obj -> . matrix
     (4) num -> . INT
     (5) num -> . FLOAT
     (6) num -> . RAT
     (7) num -> . COMPX
     (2) bool -> . TRUE
     (3) bool -> . FALSE
-    (68) range -> . LPAREN INT DOT DOT INT RPAREN
-    (69) range -> . INT DOT DOT INT
-    (70) range -> . LPAREN STRING DOT DOT STRING
-    (71) range -> . STRING DOT DOT STRING
+    (69) range -> . LPAREN INT DOT DOT INT RPAREN
+    (70) range -> . INT DOT DOT INT
+    (71) range -> . LPAREN STRING DOT DOT STRING
+    (72) range -> . STRING DOT DOT STRING
+    (77) matrix -> . LBRAKET rows RBRAKET
 
     STRING          shift and go to state 24
-    INT             shift and go to state 27
+    INT             shift and go to state 28
     FLOAT           shift and go to state 14
     RAT             shift and go to state 15
     COMPX           shift and go to state 16
     TRUE            shift and go to state 22
     FALSE           shift and go to state 23
-    LPAREN          shift and go to state 28
+    LPAREN          shift and go to state 29
+    LBRAKET         shift and go to state 30
 
-    obj                            shift and go to state 130
+    obj                            shift and go to state 152
     num                            shift and go to state 25
-    bool                           shift and go to state 42
+    bool                           shift and go to state 44
     range                          shift and go to state 26
+    matrix                         shift and go to state 27
 
-state 128
+state 148
 
     (29) func -> DEF ID LPAREN RPAREN cmmd RETURN obj . END
 
-    END             shift and go to state 131
+    END             shift and go to state 153
 
 
-state 129
+state 149
 
-    (68) range -> LPAREN INT DOT DOT INT RPAREN .
+    (69) range -> LPAREN INT DOT DOT INT RPAREN .
 
-    EQCOMP          reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    LESSTH          reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    LESSEQTH        reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    GREATH          reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    GREATEQTH       reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    NOTEQ           reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    $end            reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    END             reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    RETURN          reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    ELSE            reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    ELSIF           reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    COMMA           reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    RPAREN          reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    ID              reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    DEF             reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    IF              reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    UNLESS          reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    CASE            reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    INT             reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    FLOAT           reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    RAT             reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    COMPX           reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    COLON           reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    WHEN            reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
-    THEN            reduce using rule 68 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    EQCOMP          reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    LESSTH          reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    LESSEQTH        reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    GREATH          reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    GREATEQTH       reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    NOTEQ           reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    $end            reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    END             reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    RETURN          reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    ELSE            reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    ELSIF           reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    COMMA           reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    RPAREN          reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    ID              reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    DEF             reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    IF              reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    UNLESS          reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    CASE            reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    INT             reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    FLOAT           reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    RAT             reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    COMPX           reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    COLON           reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    WHEN            reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    RBRAKET         reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
+    THEN            reduce using rule 69 (range -> LPAREN INT DOT DOT INT RPAREN .)
 
 
-state 130
+state 150
+
+    (56) array -> LBRAKET objs COMMA ids RBRAKET .
+
+    COMMA           reduce using rule 56 (array -> LBRAKET objs COMMA ids RBRAKET .)
+    RBRAKET         reduce using rule 56 (array -> LBRAKET objs COMMA ids RBRAKET .)
+
+
+state 151
+
+    (57) array -> LBRAKET ids COMMA objs RBRAKET .
+
+    COMMA           reduce using rule 57 (array -> LBRAKET ids COMMA objs RBRAKET .)
+    RBRAKET         reduce using rule 57 (array -> LBRAKET ids COMMA objs RBRAKET .)
+
+
+state 152
 
     (28) func -> DEF ID LPAREN objs RPAREN cmmd RETURN obj . END
 
-    END             shift and go to state 132
+    END             shift and go to state 154
 
 
-state 131
+state 153
 
     (29) func -> DEF ID LPAREN RPAREN cmmd RETURN obj END .
 
@@ -2808,7 +3208,7 @@ state 131
     ELSIF           reduce using rule 29 (func -> DEF ID LPAREN RPAREN cmmd RETURN obj END .)
 
 
-state 132
+state 154
 
     (28) func -> DEF ID LPAREN objs RPAREN cmmd RETURN obj END .
 
@@ -2818,3 +3218,8 @@ state 132
     ELSE            reduce using rule 28 (func -> DEF ID LPAREN objs RPAREN cmmd RETURN obj END .)
     ELSIF           reduce using rule 28 (func -> DEF ID LPAREN objs RPAREN cmmd RETURN obj END .)
 
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for COMMA in state 74 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 92 resolved as shift
