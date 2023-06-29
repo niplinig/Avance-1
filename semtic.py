@@ -164,12 +164,13 @@ def p_elementHash(p):
 
 
 def p_elementsHash(p):
-     """elementsHash  : elementHash COMMA elementHash
-     | elementHash COMMA elementsHash
-"""
+    """elementsHash  : elementHash COMMA elementHash
+    | elementHash COMMA elementsHash"""
+
+
 def p_hash(p):
-    """hash : LBRACE elementsHash RBRACE
-    """
+    """hash : LBRACE elementsHash RBRACE"""
+
 
 def p_control_while(p):
     """control : WHILE comptn DO cmmd END
@@ -208,15 +209,19 @@ def p_cmmd(p):
     | optn
     """
 
+
 def p_matrix(p):
-    "matrix : LBRAKET rows RBRAKET "
+    "matrix : LBRAKET rows RBRAKET"
+
 
 def p_rows(p):
     """rows : row
     | row COMMA rows"""
 
+
 def p_row(p):
     "row : array"
+
 
 def p_error(p):
     if p:
@@ -236,7 +241,7 @@ def main():
         if not command:
             continue
         result = parser.parse(command)
-        if result != None:
+        if result is not None:
             print(result)
 
 
