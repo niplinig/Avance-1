@@ -32,9 +32,9 @@ def main():
 
     args = parser.parse_args()
 
-    if args.files != "data.rb" and not args.data:
+    if args.files != "data.rb" and not args.data and not args.shell:
         lex_files(args.files)
-    elif args.data:
+    elif args.data and not args.shell:
         lex_data(args.data)
     elif args.shell:
         syntax_shell()
