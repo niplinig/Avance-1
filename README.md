@@ -45,12 +45,15 @@ pipenv shell
 
 Commands
 -d --data
--f --files
+-lf --lex_files
+-s --shell
+-yf --yac_files
+
 
 ```
 ./cli.py -d "data to analyse with lexer"
 ```
 
 ```
-./cli.py -f "file path, default data.rb"
+./cli.py -lf "file path"
 ```
