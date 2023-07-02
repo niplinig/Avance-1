@@ -7,8 +7,8 @@
 # ----------------------------------
 
 import argparse
-from lexic import lex_data, lex_files
-from semtic import main as syntax_shell
+from lexic import lex_data, lex_file
+from semtic import yacc_shell, yacc_file
 import pathlib
 
 
@@ -19,25 +19,28 @@ def main():
         epilog="Trabajo en progreso",
     )
 
-    parser.add_argument(
-        "-f",
-        "--files",
-        help="Ruby text files",
-        type=pathlib.Path,
-        default="data.rb",
-    )
-    parser.add_argument("-d", "--data", help="Data to analyse", type=str)
+    group = parser.add_mutually_exclusive_group()
 
-    parser.add_argument("-s", "--shell", help="Syntax Shell")
+    group.add_argument("-lf", "--lex_file", help="Ruby text file", type=pathlib.Path)
+
+    group.add_argument("-yf", "--yacc_file", help="Ruby text file", type=pathlib.Path)
+
+    group.add_argument("-d", "--data", help="Data to analyse", type=str)
+
+    group.add_argument("-s", "--shell", help="Syntax Shell", action="store_true")
 
     args = parser.parse_args()
 
-    if args.files != "data.rb" and not args.data and not args.shell:
-        lex_files(args.files)
-    elif args.data and not args.shell:
+    if args.yacc_file:
+        yacc_file(args.yacc_file)
+    elif args.lex_file:
+        lex_file(args.lex_file)
+    elif args.data:
         lex_data(args.data)
     elif args.shell:
-        syntax_shell()
+        yacc_shell()
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":

@@ -44,10 +44,6 @@ def p_optn(p):
     "optn : num optr num"
 
 
-def p_comptn(p):
-    "comptn : obj comptr obj"
-
-
 def p_comptr(p):
     """comptr : EQCOMP
     | LESSTH
@@ -56,6 +52,10 @@ def p_comptr(p):
     | GREATEQTH
     | NOTEQ
     """
+
+
+def p_comptn(p):
+    "comptn : obj comptr obj"
 
 
 def p_var(p):
@@ -150,31 +150,36 @@ def p_strucSet(p):
     """
 
 
-def p_claveHash(p):
-    """claveHash : STRING
-    | num
-    | bool
-    | range
-    | matrix
+def p_strucHash(p):
+    """strucHash : HASH DOT NEW
+    | HASH DOT NEW LBRACE RBRACE
+    | HASH DOT NEW LBRACE hashelems RBRACE
+    | HASH array
     """
 
 
-def p_elementHash(p):
-    """elementHash : claveHash ROCKET obj"""
+def p_hashelem_rocket(p):
+    "hashelem : COLON ID ROCKET obj"
 
 
-def p_elementsHash(p):
-    """elementsHash  : elementHash COMMA elementHash
-    | elementHash COMMA elementsHash"""
+def p_hashelem_json(p):
+    "hashelem : ID COLON obj"
 
 
-def p_hash(p):
-    """hash : LBRACE elementsHash RBRACE"""
+def p_hashelem_string(p):
+    "hashelem : STRING COLON obj"
+
+
+def p_hashelems(p):
+    """hashelems : hashelem COMMA hashelem
+    | hashelem COMMA hashelems
+    """
 
 
 def p_control_while(p):
     """control : WHILE comptn DO cmmd END
-    | WHILE bool DO cmmd END"""
+    | WHILE bool DO cmmd END
+    """
 
 
 def p_objs(p):
@@ -210,17 +215,13 @@ def p_cmmd(p):
     """
 
 
-def p_matrix(p):
-    "matrix : LBRAKET rows RBRAKET"
+def p_strucMatrix(p):
+    "strucMatrix : MATRIX LBRAKET arrays RBRAKET"
 
 
-def p_rows(p):
-    """rows : row
-    | row COMMA rows"""
-
-
-def p_row(p):
-    "row : array"
+def p_arrays(p):
+    """arrays : array
+    | array COMMA arrays"""
 
 
 def p_error(p):
@@ -230,7 +231,7 @@ def p_error(p):
         print("Invalid syntax at EOF")
 
 
-def main():
+def yacc_shell():
     parser = yacc.yacc(debug=1)
 
     while True:
@@ -240,10 +241,19 @@ def main():
             break
         if not command:
             continue
+        if command == "exit()":
+            break
         result = parser.parse(command)
         if result is not None:
             print(result)
 
 
-if __name__ == "__main__":
-    main()
+def yacc_file(file_path):
+    parser = yacc.yacc(debug=1)
+
+    with open(file_path, mode="r", encoding="utf8") as data:
+        data_lines = data.readlines()
+        for line in data_lines:
+            result = parser.parse(line)
+            if result is not None:
+                print(result)

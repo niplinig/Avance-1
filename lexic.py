@@ -41,8 +41,11 @@ reserved = {
     "ensure": "ENSURE",
     "next": "NEXT",
     "not": "NOT",
+    "new": "NEW",
+    "do": "DO",
     "Set": "SET",
-    "new": "NEW", "do":"DO"
+    "Hash": "HASH",
+    "Matrix": "MATRIX",
 }
 
 # Secuencia de tokens
@@ -118,6 +121,8 @@ t_LBRAKET = r"\["
 t_RBRAKET = r"\]"
 t_GREATEQTH = r">="
 t_LESSEQTH = r"<="
+t_ARROW = r"->"
+t_ROCKET = r"=>"
 t_NOTEQ = r"\!="
 t_LESSTH = r"<"
 t_GREATH = r">"
@@ -134,7 +139,7 @@ t_TILDE = r"~"
 t_EQUALS = r"="
 t_RAT = r"[1-9]+\/[1-9]+r"
 t_COMPX = r"([0-9]*\.[0-9]+ri|[0-9]*\.[0-9]+ir)"
-t_ROCKET= r"=>"
+
 # Número de líneas
 
 
@@ -198,7 +203,7 @@ def lex_data(data):
         )
 
 
-def lex_files(file_path):
+def lex_file(file_path):
     print_title()
     with open(file_path, mode="r", encoding="utf8") as data:
         data_lines = data.readlines()
