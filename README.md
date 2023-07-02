@@ -1,5 +1,16 @@
 # BUILDING LEXER
 
+## Install python-devel
+Ubuntu
+```
+sudo apt install python-dev
+```
+
+Fedora
+```
+sudo dnf install python-devel
+```
+
 ## Install pipenv
 
 Pip
@@ -19,14 +30,6 @@ sudo dnf install pipenv
 
 ## Install dependencies
 
-```
-pipenv install --dev
-```
-OR
-```
-pipenv install requests
-```
-OR
 ```
 pipenv install -e .
 ```
