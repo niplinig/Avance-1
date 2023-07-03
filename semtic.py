@@ -31,27 +31,64 @@ def p_num(p):
     """
 
 
-def p_optr(p):
-    """optr : PLUS
-    | MINUS
-    | TIMES
-    | DIVIDE
-    | MODULE
-    | EXPON
-    """
+def p_optn_plus(p):
+    "optn : num PLUS num"
+    p[0] = p[1] + p[3]
 
 
-def p_optn(p):
-    """optn : num optr num
-    | ID optr ID
-    """
+def p_optn_minus(p):
+    "optn : num MINUS num"
+    p[0] = p[1] - p[3]
 
 
-def p_optns(p):
-    """optns : optn
-    | optn optr num
-    | optn optr optns
-    """
+def p_optn_times(p):
+    "optn : num TIMES num"
+    p[0] = p[1] * p[3]
+
+
+def p_optn_divide(p):
+    "optn : num DIVIDE num"
+    p[0] = p[1] / p[3]
+
+
+def p_optn_module(p):
+    "optn : num MODULE num"
+    p[0] = p[1] % p[3]
+
+
+def p_optn_expon(p):
+    "optn : num EXPON num"
+    p[0] = p[1] ** p[3]
+
+
+def p_optns_plus(p):
+    "optns : optn PLUS num"
+    p[0] = p[1] + p[3]
+
+
+def p_optns_minus(p):
+    "optns : optn MINUS num"
+    p[0] = p[1] - p[3]
+
+
+def p_optns_times(p):
+    "optns : optn TIMES num"
+    p[0] = p[1] * p[3]
+
+
+def p_optns_divide(p):
+    "optns : optn DIVIDE num"
+    p[0] = p[1] / p[3]
+
+
+def p_optns_module(p):
+    "optns : optn MODULE num"
+    p[0] = p[1] % p[3]
+
+
+def p_optns_expon(p):
+    "optns : optn EXPON num"
+    p[0] = p[1] ** p[3]
 
 
 def p_comptr(p):
