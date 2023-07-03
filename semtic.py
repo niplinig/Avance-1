@@ -42,7 +42,16 @@ def p_optr(p):
 
 
 def p_optn(p):
-    "optn : num optr num"
+    """optn : num optr num
+    | ID optr ID
+    """
+
+
+def p_optns(p):
+    """optns : optn
+    | optn optr num
+    | optn optr optns
+    """
 
 
 def p_comptr(p):
@@ -56,19 +65,42 @@ def p_comptr(p):
 
 
 def p_comptn(p):
-    "comptn : obj comptr obj"
+    """comptn : obj comptr obj
+    | ID comptr ID
+    """
+
+
+def p_comptns(p):
+    """comptns : comptn
+    | comptn comptr obj
+    | comptn comptr ID
+    | comptn comptr comptns
+    """
+
+
+def p_and(p):
+    """and : AND
+    | BOOLAND
+    """
+
+
+def p_or(p):
+    """or : OR
+    | BOOLOR
+    """
 
 
 def p_var(p):
     """var : ID EQUALS obj
+    | ID EQUALS struc
     | ID EQUALS ID
     | ID EQUALS NIL
+    | ID EQUALS optns
     """
 
 
 def p_func(p):
-    """
-    func : DEF ID LPAREN objs RPAREN cmmd END
+    """func : DEF ID LPAREN objs RPAREN cmmd END
     | DEF ID LPAREN RPAREN cmmd END
     | DEF ID cmmd END
     | DEF ID LPAREN objs RPAREN cmmd RETURN obj END
@@ -111,6 +143,18 @@ def p_control_unless(p):
     """
 
 
+def p_control_case(p):
+    """control : CASE ID whens else END
+    | CASE ID whens END
+    """
+
+
+def p_control_while(p):
+    """control : WHILE comptn DO cmmd END
+    | WHILE bool DO cmmd END
+    """
+
+
 def p_when(p):
     """when : WHEN objs
     | WHEN objs THEN
@@ -124,15 +168,10 @@ def p_whens(p):
     """
 
 
-def p_control_case(p):
-    """control : CASE ID whens else END
-    | CASE ID whens END
-    """
-
-
 def p_ids(p):
     """ids : ID
-    | ID COMMA ids"""
+    | ID COMMA ids
+    """
 
 
 def p_array(p):
@@ -141,6 +180,16 @@ def p_array(p):
     | LBRAKET objs COMMA ids RBRAKET
     | LBRAKET ids COMMA objs RBRAKET
     """
+
+
+def p_arrays(p):
+    """arrays : array
+    | array COMMA arrays
+    """
+
+
+def p_strucMatrix(p):
+    "strucMatrix : MATRIX LBRAKET arrays RBRAKET"
 
 
 def p_strucSet(p):
@@ -177,12 +226,6 @@ def p_hashelems(p):
     """
 
 
-def p_control_while(p):
-    """control : WHILE comptn DO cmmd END
-    | WHILE bool DO cmmd END
-    """
-
-
 def p_objs(p):
     """objs : obj
     | obj COMMA objs
@@ -194,9 +237,13 @@ def p_obj(p):
     | num
     | bool
     | range
+    """
+
+
+def p_struc(p):
+    """struc : strucMatrix
     | strucSet
     | strucHash
-    | strucMatrix
     """
 
 
@@ -212,17 +259,8 @@ def p_cmmd(p):
     """cmmd : var
     | func
     | control
-    | optn
+    | optns
     """
-
-
-def p_strucMatrix(p):
-    "strucMatrix : MATRIX LBRAKET arrays RBRAKET"
-
-
-def p_arrays(p):
-    """arrays : array
-    | array COMMA arrays"""
 
 
 def p_error(p):
