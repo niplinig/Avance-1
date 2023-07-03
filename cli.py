@@ -31,12 +31,16 @@ def main():
 
     args = parser.parse_args()
 
+    result = ""
     if args.yacc_file:
-        yacc_file(args.yacc_file)
+        result = yacc_file(args.yacc_file)
+        print(result)
     elif args.lex_file:
-        lex_file(args.lex_file)
+        result = lex_file(args.lex_file)
+        print(result)
     elif args.data:
-        lex_data(args.data)
+        result = lex_data(args.data)
+        print(result)
     elif args.shell:
         yacc_shell()
     else:

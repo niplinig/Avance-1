@@ -270,9 +270,26 @@ def p_error(p):
         print(f"Invalid Syntax EOF")
 
 
+def get_title():
+    result = ""
+    result += "\nSyntactic Analysis\n"
+    result += f" {('-') * 46}\n"
+    return result
+
+
+def yacc_data(data):
+    parser = yacc.yacc()
+    result = ""
+    result += get_title()
+    result_line = parser.parse(data)
+    if result_line is not None:
+        result += result_line
+    return result
+
+
 def yacc_shell():
     parser = yacc.yacc()
-
+    print(get_title())
     while True:
         try:
             command = input("$ ")
@@ -282,17 +299,19 @@ def yacc_shell():
             continue
         if command == "exit()":
             break
-        result = parser.parse(command, tracking=True)
-        if result is not None:
-            print(result)
+        result_line = parser.parse(command)
+        if result_line is not None:
+            print(result_line)
 
 
 def yacc_file(file_path):
     parser = yacc.yacc()
-
+    result = ""
+    result += get_title()
     with open(file_path, mode="r", encoding="utf8") as data:
         data_lines = data.readlines()
-        for i, line in enumerate(data_lines):
-            result = parser.parse(line, tracking=True)
-            if result is not None:
-                print(result)
+        for line in data_lines:
+            result_line = parser.parse(line, tracking=True)
+            if result_line is not None:
+                result += result_line
+    return result

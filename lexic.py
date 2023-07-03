@@ -178,16 +178,12 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-spp = chalk.bold.black("|")
-
-
-def print_title():
-    print(chalk.bold.black.bg_green_bright("\nAnalizador Léxico\n"))
-    header_text = (
-        f"{spp} Token type {spp}  Token value  {spp} Line num {spp} Position {spp}"
-    )
-    print(header_text)
-    print(" ", chalk.bold.black("-") * 46)
+def get_title():
+    result = ""
+    result += "\nLexical Analysis\n"
+    result += f"| Token type |  Token value  | Line num | Position |\n"
+    result += f" {('-') * 46}\n"
+    return result
 
 
 # Building lexer
@@ -196,22 +192,29 @@ lexer = lex.lex()
 
 
 def lex_data(data):
-    print_title()
+    result = ""
+    result += get_title()
     lexer.input(data)
     for tok in lexer:
-        print(
-            f"{spp}{tok.type}{' '*(12-len(tok.type))}{spp}{tok.value}{' '*(15-len(tok.value))}{spp}{tok.lineno}{' '*(10-len(str(tok.lineno)))}{spp}{tok.lexpos}{' '*(10-len(str(tok.lexpos)))}{spp}"
-        )
+        result += f"|   {tok.type} \
+                |   {tok.value} \
+                |   {tok.lineno} \
+                |   {tok.lexpos} \
+                |\n"
+    return result
 
 
 def lex_file(file_path):
-    print_title()
+    result = ""
+    result += get_title()
     with open(file_path, mode="r", encoding="utf8") as data:
         data_lines = data.readlines()
         for line in data_lines:
             lexer.input(line)
             for tok in lexer:
-                print(
-                    f"{spp}{tok.type}{' '*(12-len(tok.type))}{spp}{tok.value}{' '*(15-len(tok.value))}{spp}{tok.lineno}{' '*(10-len(str(tok.lineno)))}{spp}{tok.lexpos}{' '*(10-len(str(tok.lexpos)))}{spp}"
-                )
-    data.close()
+                result += f"|   {tok.type} \
+                        |   {tok.value} \
+                        |   {tok.lineno} \
+                        |   {tok.lexpos} \
+                        |\n"
+    return result
