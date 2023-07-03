@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 ply = "*"
 yachalk = "*"
+customtkinter = "*"
 
 [dev-packages]
 

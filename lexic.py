@@ -94,6 +94,7 @@ tokens = (
     "RAT",
     "COMPX",
     "ROCKET",
+    "ARROW",
 ) + tuple(reserved.values())
 
 # Expresiones regulares para cada token
@@ -121,7 +122,7 @@ t_LBRAKET = r"\["
 t_RBRAKET = r"\]"
 t_GREATEQTH = r">="
 t_LESSEQTH = r"<="
-t_ARROW = r"->"
+t_ARROW = r"\->"
 t_ROCKET = r"=>"
 t_NOTEQ = r"\!="
 t_LESSTH = r"<"

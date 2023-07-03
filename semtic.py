@@ -8,6 +8,7 @@
 
 import ply.yacc as yacc
 from lexic import tokens, lexer
+from yachalk import chalk
 
 # Regla padre
 
@@ -193,9 +194,9 @@ def p_obj(p):
     | num
     | bool
     | range
-    | matrix
-    | hash
     | strucSet
+    | strucHash
+    | strucMatrix
     """
 
 
@@ -226,13 +227,13 @@ def p_arrays(p):
 
 def p_error(p):
     if p:
-        print(f"Sintaxis inválida: {p.type}")
+        print(f"{chalk.bold.black('Invalid Syntax :')} {p.type}")
     else:
-        print("Invalid syntax at EOF")
+        print(f"Invalid Syntax EOF")
 
 
 def yacc_shell():
-    parser = yacc.yacc(debug=1)
+    parser = yacc.yacc()
 
     while True:
         try:
@@ -243,17 +244,17 @@ def yacc_shell():
             continue
         if command == "exit()":
             break
-        result = parser.parse(command)
+        result = parser.parse(command, tracking=True)
         if result is not None:
             print(result)
 
 
 def yacc_file(file_path):
-    parser = yacc.yacc(debug=1)
+    parser = yacc.yacc()
 
     with open(file_path, mode="r", encoding="utf8") as data:
         data_lines = data.readlines()
-        for line in data_lines:
-            result = parser.parse(line)
+        for i, line in enumerate(data_lines):
+            result = parser.parse(line, tracking=True)
             if result is not None:
                 print(result)
