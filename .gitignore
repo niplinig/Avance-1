@@ -3,3 +3,6 @@
 ./parsetab.py
 ./Pipfile.lock
 ./parser.out
+parser.out
+parsetab.py
+__pycache__

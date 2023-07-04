@@ -8,7 +8,6 @@
 
 import ply.yacc as yacc
 from lexic import tokens, lexer
-from yachalk import chalk
 import io
 import sys
 
@@ -304,9 +303,9 @@ def p_cmmd(p):
 
 def p_error(p):
     if p:
-        print(f"{chalk.bold.black('Invalid Syntax :')} {p.type}")
+        print(f"Invalid Syntax : {p.type}")
     else:
-        print(f"Invalid Syntax EOF")
+        print("Invalid Syntax EOF")
 
 
 def get_title():
@@ -320,15 +319,19 @@ def yacc_data(data):
     parser = yacc.yacc()
     result = ""
     result += get_title()
+
     # Redirigir la salida estándar a un objeto StringIO
-    captura_salida = io.StringIO()
-    sys.stdout = captura_salida
-    #impresion
+    temp_out = io.StringIO()
+    sys.stdout = temp_out
+
+    # Realizar el análisis Sintáctico
     parser.parse(data)
+
     # Restaurar la salida estándar
     sys.stdout = sys.__stdout__
+
     # Obtener el valor impreso
-    result_line = f"{captura_salida.getvalue()}"
+    result_line = temp_out.getvalue()
     if result_line is not None:
         result += result_line
     return result
