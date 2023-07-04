@@ -9,6 +9,8 @@
 import ply.yacc as yacc
 from lexic import tokens, lexer
 from yachalk import chalk
+import io
+import sys
 
 # Regla padre
 
@@ -318,7 +320,15 @@ def yacc_data(data):
     parser = yacc.yacc()
     result = ""
     result += get_title()
-    result_line = parser.parse(data)
+    # Redirigir la salida estándar a un objeto StringIO
+    captura_salida = io.StringIO()
+    sys.stdout = captura_salida
+    #impresion
+    parser.parse(data)
+    # Restaurar la salida estándar
+    sys.stdout = sys.__stdout__
+    # Obtener el valor impreso
+    result_line = f"{captura_salida.getvalue()}"
     if result_line is not None:
         result += result_line
     return result
