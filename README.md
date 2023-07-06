@@ -44,10 +44,10 @@ pipenv shell
 ## Using CLI
 
 Commands
--d --data
--lf --lex_files
--s --shell
--yf --yac_files
+- -d --data
+- -lf --lex_files
+- -s --shell
+- -yf --yac_files
 
 
 ```
