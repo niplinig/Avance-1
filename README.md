@@ -20,7 +20,7 @@ nix-shell -p python311Packages.pydevtool
 
 Pip
 ```
-pip install -user pipenv
+pip install --user pipenv
 ```
 
 Ubuntu
