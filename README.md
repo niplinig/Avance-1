@@ -11,6 +11,11 @@ Fedora
 sudo dnf install python-devel
 ```
 
+NixOS
+```
+nix-shell -p python311Packages.pydevtool
+```
+
 ## Install pipenv
 
 Pip
