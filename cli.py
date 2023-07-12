@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
-# ----------------------------------
-# cli.py
+# ==============================================
 #
-# Interfaz de Línea de Comandos
-# ----------------------------------
+# cli.py.py
+#
+# Command Line Interface CLI
+#
+# ==============================================
 
 import argparse
-from lexic import lex_data, lex_file
-from semtic import yacc_shell, yacc_file
+from lexical import lex_data, lex_file
+from semantic import yacc_shell, yacc_file
 import pathlib
 
 
