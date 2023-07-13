@@ -19,20 +19,6 @@ end
 
 # Algoritmo 2
 
-def merge_sort(array_datos)
-  if array_datos.length <= 1
-    return array_datos
-  end
-  array_size = array_datos.length
-  middle = (array_datos.length / 2).round
-  left_side = array_datos[0...middle]
-  right_side = array_datos[middle...array_size]
-  sorted_left = merge_sort(left_side)
-  sorted_right = merge_sort(right_side)
-  merge(array_datos, sorted_left, sorted_right)
-  return array_datos
-end
-
 def merge(array_datos, sorted_left, sorted_right)
   left_size = sorted_left.length
   right_size = sorted_right.length

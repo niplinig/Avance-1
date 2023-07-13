@@ -150,6 +150,7 @@ class MyYacc(object):
         | ID ASSIGN struc
         | ID ASSIGN literal
         | ID ASSIGN arithmetic
+        | ID ASSIGN call_method
         | strucArray ASSIGN ID
         | strucArray ASSIGN strucArray
         """
