@@ -98,25 +98,35 @@ class MyYacc(object):
         | value MODULO value
         | value MODULO arithmetic
         """
-        line = p.lineno(2)
-        index = p.lexpos(2)
+
 
     def p_comparation(self, p):
         """comparation : literal EQUAL literal
+        | ID EQUAL literal
+        | literal EQUAL ID
         | ID EQUAL ID
         | literal NOT_EQ literal
+        | ID NOT_EQ literal
+        | literal NOT_EQ ID
         | ID NOT_EQ ID
         | literal LT_OR_EQ literal
+        | ID LT_OR_EQ literal
+        | literal LT_OR_EQ ID
         | ID LT_OR_EQ ID
         | literal GT_OR_EQ literal
+        | ID GT_OR_EQ literal
+        | literal GT_OR_EQ ID
         | ID GT_OR_EQ ID
         | literal LESS_THAN literal
+        | ID LESS_THAN literal
+        | literal LESS_THAN ID
         | ID LESS_THAN ID
         | literal GREATER_THAN literal
+        | ID GREATER_THAN literal
+        | literal GREATER_THAN ID
         | ID GREATER_THAN ID
         """
-        line = p.lineno(2)
-        index = p.lexpos(2)
+
 
     def p_comparations(self, p):
         """comparations : comparation AND comparation
@@ -132,8 +142,7 @@ class MyYacc(object):
         | boolean OR boolean
         | boolean LOGIC_OR boolean
         """
-        line = p.lineno(2)
-        index = p.lexpos(2)
+
 
     def p_assignment(self, p):
         """assignment : ID ASSIGN ID
@@ -141,10 +150,10 @@ class MyYacc(object):
         | ID ASSIGN struc
         | ID ASSIGN literal
         | ID ASSIGN arithmetic
+        | strucArray ASSIGN ID
+        | strucArray ASSIGN strucArray
         """
-        p[0] = p[2]
-        line = p.lineno(2)
-        index = p.lexpos(2)
+
 
     def p_assignment_operations(self, p):
         """assignment : ID ADD_ASSIGN ID
@@ -158,10 +167,9 @@ class MyYacc(object):
         | ID MOD_ASSIGN ID
         | ID MOD_ASSIGN numeric
         """
-        line = p.lineno(2)
-        index = p.lexpos(2)
 
-    def p_func(self, p):
+
+    def p_function(self, p):
         """function : DEF ID L_PAREN literals R_PAREN statements END
         | DEF ID L_PAREN R_PAREN statements END
         | DEF ID statements END
@@ -256,6 +264,11 @@ class MyYacc(object):
         """
 
 
+    def p_strucArray(self, p):
+        """strucArray : ID L_BRACKET ID R_BRACKET
+        | ID L_BRACKET arithmetic R_BRACKET
+        """
+
     def p_array(self, p):
         """array : L_BRACKET literals R_BRACKET
         | L_BRACKET ids R_BRACKET
@@ -273,6 +286,7 @@ class MyYacc(object):
         """struc : strucMatrix
         | strucSet
         | strucHash
+        | strucArray
         """
 
 
