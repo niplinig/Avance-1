@@ -9,7 +9,7 @@
 # ==============================================
 
 import ply.yacc as yacc
-from lexical import tokens, lexer
+from lexical import MyLexer
 import io
 import sys
 
@@ -19,9 +19,12 @@ import sys
 #
 # ----------------------------------
 
+start = 'init'
 
 def p_init(p):
     "init : statements"
+    line = p.lineno(0)
+    index = p.lexpos(0)
 
 
 def p_statement(p):
@@ -30,18 +33,24 @@ def p_statement(p):
     | control
     | arithmetic
     """
+    line = p.lineno(0)
+    index = p.lexpos(0)
 
 
 def p_statements(p):
     """statements : statement
     | statement statements
     """
+    line = p.lineno(0)
+    index = p.lexpos(0)
 
 
 def p_ids(p):
     """ids : ID
     | ID COMMA ids
     """
+    line = p.lineno(0)
+    index = p.lexpos(0)
 
 
 def p_literal(p):
@@ -50,18 +59,24 @@ def p_literal(p):
     | numeric
     | range
     """
+    line = p.lineno(0)
+    index = p.lexpos(0)
 
 
 def p_literals(p):
     """literals : literal
     | literal COMMA literals
-    """    
+    """
+    line = p.lineno(0)
+    index = p.lexpos(0)  
 
 
 def p_boolean(p):
     """boolean : TRUE
     | FALSE
     """
+    line = p.lineno(0)
+    index = p.lexpos(0)
 
 
 def p_numeric(p):
@@ -70,6 +85,9 @@ def p_numeric(p):
     | FLOAT
     | INTEGER
     """
+    line = p.lineno(0)
+    index = p.lexpos(0)
+
 
 def p_arithmetic(p):
     """arithmetic : numeric PLUS numeric
