@@ -222,7 +222,7 @@ class MyLexer(object):
 	t_INTEGER = r"[0-9]+"
 	t_STRING = r"(\'[^\']*\'|\"[^\"]*\")"
 
-	t_ignore = " \t"
+	t_ignore  = ' \t'
 
 	# ----------------------------------
 	#

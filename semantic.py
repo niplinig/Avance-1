@@ -181,8 +181,8 @@ class MyYacc(object):
         | DEF ID statements RETURN literal END
         """
 
-    def p_call_method(self, p):
-        """call_method : ID PERIOD ID
+    def p_callMethod(self, p):
+        """callMethod : ID PERIOD ID
         | ID PERIOD ID L_PAREN literals R_PAREN
         | ID PERIOD ID L_PAREN R_PAREN
         """
@@ -339,7 +339,8 @@ class MyYacc(object):
         | L_PAREN INTEGER DOUBLE_PERIOD INTEGER R_PAREN
         | INTEGER ELLIPSIS INTEGER
         | INTEGER DOUBLE_PERIOD INTEGER
-        | INTEGER ELLIPSIS L_PAREN call_method R_PAREN
+        | INTEGER ELLIPSIS L_PAREN callMethod R_PAREN
+        | INTEGER ELLIPSIS L_PAREN ID PERIOD ID R_PAREN
         | L_PAREN STRING ELLIPSIS STRING
         | L_PAREN STRING DOUBLE_PERIOD STRING
         | STRING ELLIPSIS STRING
