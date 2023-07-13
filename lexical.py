@@ -251,7 +251,7 @@ class MyLexer(object):
 		print(f"Illegal character {t.value[0]}")
 		t.lexer.skip(1)
 
-	def build(self, **kwargs):
+	def __init__(self, **kwargs):
 		self.lexer = lex.lex(module=self, **kwargs)
 
 	def test(self, data):
@@ -281,12 +281,10 @@ Lexical Analysis
 
 def lex_data(data):
     lexer = MyLexer()
-    lexer.build()
     return get_title().join(lexer.test(data))
 
 def lex_file(file_path):
     lexer = MyLexer()
-    lexer.build()
     printing_data = get_title()
     with open(file_path, mode="r", encoding="utf8") as data:
         data_lines = data.readlines()
