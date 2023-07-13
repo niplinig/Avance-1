@@ -181,6 +181,11 @@ class MyYacc(object):
         | DEF ID statements RETURN literal END
         """
 
+    def p_call_method(self, p):
+        """call_method : ID PERIOD ID
+        | ID PERIOD ID L_PAREN literals R_PAREN
+        | ID PERIOD ID L_PAREN R_PAREN
+        """
 
     def p_else(self, p):
         """else : ELSE boolean statements
@@ -247,6 +252,12 @@ class MyYacc(object):
         | WHILE comparation DO statements END
         | WHILE comparations DO statements END
         """
+    
+    def p_control_for(self, p):
+        """control : FOR ID IN range DO statements END
+        | FOR ID IN range statements END
+        """
+    
 
 
     def p_element(self, p):
@@ -328,6 +339,7 @@ class MyYacc(object):
         | L_PAREN INTEGER DOUBLE_PERIOD INTEGER R_PAREN
         | INTEGER ELLIPSIS INTEGER
         | INTEGER DOUBLE_PERIOD INTEGER
+        | INTEGER ELLIPSIS L_PAREN call_method R_PAREN
         | L_PAREN STRING ELLIPSIS STRING
         | L_PAREN STRING DOUBLE_PERIOD STRING
         | STRING ELLIPSIS STRING
