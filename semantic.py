@@ -46,6 +46,7 @@ def p_ids(p):
 
 def p_literal(p):
     """literal : STRING
+    | ID
     | boolean
     | numeric
     | range
@@ -71,19 +72,25 @@ def p_numeric(p):
     | INTEGER
     """
 
+
+def p_value(p):
+    """value : numeric
+    | ID
+    """
+
 def p_arithmetic(p):
-    """arithmetic : numeric PLUS numeric
-    | numeric PLUS arithmetic
-    | numeric MINUS numeric
-    | numeric MINUS arithmetic
-    | numeric EXPO numeric
-    | numeric EXPO arithmetic
-    | numeric MULT numeric
-    | numeric MULT arithmetic
-    | numeric DIV numeric
-    | numeric DIV arithmetic
-    | numeric MODULO numeric
-    | numeric MODULO arithmetic
+    """arithmetic : value PLUS value
+    | value PLUS arithmetic
+    | value MINUS value
+    | value MINUS arithmetic
+    | value EXPO value
+    | value EXPO arithmetic
+    | value MULT value
+    | value MULT arithmetic
+    | value DIV value
+    | value DIV arithmetic
+    | value MODULO value
+    | value MODULO arithmetic
     """
 
 
