@@ -27,8 +27,7 @@ class MyYacc(object):
 
     def p_init(self, p):
         "init : statements"
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_statement(self, p):
         """statement : assignment
@@ -36,22 +35,19 @@ class MyYacc(object):
         | control
         | arithmetic
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_statements(self, p):
         """statements : statement
         | statement statements
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_ids(self, p):
         """ids : ID
         | ID COMMA ids
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_literal(self, p):
         """literal : STRING
@@ -60,22 +56,19 @@ class MyYacc(object):
         | numeric
         | range
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_literals(self, p):
         """literals : literal
         | literal COMMA literals
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_boolean(self, p):
         """boolean : TRUE
         | FALSE
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_numeric(self, p):
         """numeric : COMPLEX
@@ -83,15 +76,13 @@ class MyYacc(object):
         | FLOAT
         | INTEGER
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_value(self, p):
         """value : numeric
         | ID
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_arithmetic(self, p):
         """arithmetic : value PLUS value
@@ -181,31 +172,27 @@ class MyYacc(object):
         | DEF ID L_PAREN R_PAREN statements RETURN literal END
         | DEF ID statements RETURN literal END
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_else(self, p):
         """else : ELSE boolean statements
         | ELSE comparation statements
         | ELSE comparations statements
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_elsif(self, p):
         """elsif : ELSIF boolean statements
         | ELSIF comparation statements
         | ELSIF comparations statements
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_elses(self, p):
         """elses : else
         | elsif elses
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_contol_if(self, p):
         """control : IF boolean statements END
@@ -215,8 +202,7 @@ class MyYacc(object):
         | IF comparation statements elses END
         | IF comparations statements elses END
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_control_unless(self, p):
         """control : UNLESS boolean COLON statements END
@@ -226,8 +212,7 @@ class MyYacc(object):
         | UNLESS comparation statements elses END
         | UNLESS comparations statements elses END
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_when(self, p):
         """when : WHEN literal
@@ -235,30 +220,26 @@ class MyYacc(object):
         | WHEN comparation
         | WHEN comparations
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_whens(self, p):
         """whens : when
         | when whens
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_control_case(self, p):
         """control : CASE ID whens else END
         | CASE ID whens END
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_control_while(self, p):
         """control : WHILE boolean DO statements END
         | WHILE comparation DO statements END
         | WHILE comparations DO statements END
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_element(self, p):
         """element : ID
@@ -267,43 +248,37 @@ class MyYacc(object):
         | numeric
         | range
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_elements(self, p):
         """elements : element
         | element COMMA elements
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_array(self, p):
         """array : L_BRACKET literals R_BRACKET
         | L_BRACKET ids R_BRACKET
         | L_BRACKET elements R_BRACKET
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_arrays(self, p):
         """arrays : array
         | array COMMA arrays
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_struc(self, p):
         """struc : strucMatrix
         | strucSet
         | strucHash
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_strucMatrix(self, p):
         "strucMatrix : MATRIX L_BRACKET arrays R_BRACKET"
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_strucSet(self, p):
         """strucSet : SET PERIOD NEW
@@ -311,8 +286,7 @@ class MyYacc(object):
         | SET PERIOD NEW L_PAREN array R_PAREN
         | SET array
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_strucHash(self, p):
         """strucHash : HASH PERIOD NEW
@@ -320,23 +294,20 @@ class MyYacc(object):
         | HASH PERIOD NEW L_BRACE hashelems R_BRACE
         | HASH array
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_hashelem_rocket(self, p):
         """hashelem : COLON ID RW_DOUBLE_ARROW literal
         | ID COLON literal
         | STRING COLON literal
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_hashelems(self, p):
         """hashelems : hashelem COMMA hashelem
         | hashelem COMMA hashelems
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_range(self, p):
         """range : L_PAREN INTEGER ELLIPSIS INTEGER R_PAREN
@@ -348,12 +319,11 @@ class MyYacc(object):
         | STRING ELLIPSIS STRING
         | STRING DOUBLE_PERIOD STRING
         """
-        line = p.lineno(0)
-        index = p.lexpos(0)
+
 
     def p_error(self, p):
         if p:
-            print(f"Invalid Syntax : {p.type}, line {p.line}, pos {p.index}")
+            print(f"{' '*(18 - len(p.type))}{p.type}{' '*(18 - len(p.type))}{' '*(13 - len(str(p.lineno)))}{p.lineno}{' '*(13 - len(str(p.lineno)))}{' '*(10 - len(str(p.lexpos)))}{p.lexpos}{' '*(10 - len(str(p.lexpos)))}")
         else:
             print("Invalid Syntax EOF")
 
@@ -364,7 +334,7 @@ class MyYacc(object):
     def test(self, data):
         self.temp_out = StringIO() # Redirigir la salida estándar a un objeto StringIO
         with redirect_stdout(self.temp_out):
-            self.parser.parse(data)
+            self.parser.parse(data, tracking=True)
         return self.temp_out.getvalue() # Obtener el valor impreso
 
 
@@ -372,7 +342,8 @@ class MyYacc(object):
 def get_title():
     return f"""
 Syntactic Analysis
-{('-') * 46}
+|    Token type    | Line number | Position |
+{('-') * 108}
 """
 
 

@@ -6,7 +6,6 @@ Unused terminals:
     ARRAY
     AT_SIGN
     BEGIN
-    BLOCK_COMMENT
     BREAK
     CLASS
     DOLLAR_SIGN
@@ -192,7 +191,6 @@ ARRAY                :
 ASSIGN               : 61 62 63 64 65
 AT_SIGN              : 
 BEGIN                : 
-BLOCK_COMMENT        : 
 BREAK                : 
 CASE                 : 111 112
 CLASS                : 

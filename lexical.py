@@ -83,6 +83,7 @@ class MyLexer(object):
 	# ----------------------------------
 
 	tokens = (
+
 		# Comparison Operators
 		"EQUAL", # ==
 		"NOT_EQ", # !=
@@ -144,13 +145,12 @@ class MyLexer(object):
 		"FLOAT", # 0.5
 		"INTEGER",	# 10
 		"STRING", # "Hi" 'Hi'
-		
-		# Comment
-		"LINE_COMMENT", # #...
-		"BLOCK_COMMENT", # =begin ... =end
 
 		# Identifier
 		"ID", # x, color, UP
+
+		# Comment
+		"LINE_COMMENT", # #...
 		
 	) + tuple(reserved.values())
 
@@ -234,43 +234,35 @@ class MyLexer(object):
 		r"\n+"
 		t.lexer.lineno += len(t.value)
 
+	def t_LINE_COMMENT(self, t):
+		r"\#.*"
+		pass
+
 	def t_ID(self, t):
 		r"[a-zA-Z_]+\w*"
 		t.type = self.reserved.get(t.value, "ID")
 		return t
-
-	def t_LINE_COMMENT(self, t):
-			r"\#.*"
-			pass
-
-	def t_BLOCK_COMMENT(self, t):
-		r"=begin\w*=end"
-		pass
 
 	def t_error(self, t):
 		print(f"Illegal character {t.value[0]}")
 		t.lexer.skip(1)
 
 	def __init__(self, **kwargs):
-		self.lexer = lex.lex(module=self, **kwargs)
+		self.lexer = lex.lex(module=self, **kwargs, debug=1)
 
 	def test(self, data):
 		tokens = ""
 		self.lexer.input(data)
 		for tok in self.lexer:
-			tokens += f"| {tok.type} \
-            | {tok.value} \
-            | {tok.lineno} \
-            | {tok.lexpos} \
-            |\n"
+			tokens += f"{' '*(18 - len(tok.type))}{tok.type}{' '*(18 - len(tok.type))}{' '*(17 - len(tok.value))}{tok.value}{' '*(17 - len(tok.value))}{' '*(13 - len(str(tok.lineno)))}{tok.lineno}{' '*(13 - len(str(tok.lineno)))}{' '*(10 - len(str(tok.lexpos)))}{tok.lexpos}{' '*(10 - len(str(tok.lexpos)))}\n"
 		return tokens
 
 
 def get_title():
 	return f"""
 Lexical Analysis
-| Token type |  Token value  | Line num | Position |
-{('-') * 46}
+|    Token type    |   Token value   | Line number | Position |
+{('-') * 108}
 """
 
 # ----------------------------------

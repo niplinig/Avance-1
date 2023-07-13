@@ -128,10 +128,10 @@ sem_button = customtkinter.CTkButton(
 )
 sem_button.grid(row=0, column=1, padx=10, pady=10)
 
-code = customtkinter.CTkTextbox(master=frame)
+code = customtkinter.CTkTextbox(master=frame, font=("monoscape", 16))
 code.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
-result = customtkinter.CTkTextbox(master=frame, wrap="word")
+result = customtkinter.CTkTextbox(master=frame, wrap="word", font=("monoscape", 16))
 result.grid(row=1, column=1, padx=10, pady=10, sticky="nsew")
 
 open_new_file()
