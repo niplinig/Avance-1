@@ -10,7 +10,7 @@
 
 import argparse
 from lexical import lex_data, lex_file
-from semantic import yacc_shell, yacc_file
+from semantic import yacc_shell, yacc_file, yacc_data
 import pathlib
 
 
@@ -27,22 +27,22 @@ def main():
 
     group.add_argument("-yf", "--yacc_file", help="Ruby text file", type=pathlib.Path)
 
-    group.add_argument("-d", "--data", help="Data to analyse", type=str)
+    group.add_argument("-ld", "--lex_data", help="Data to tokenize", type=str)
+
+    group.add_argument("-yd", "--yacc_data", help="Data to analyse", type=str)
 
     group.add_argument("-s", "--shell", help="Syntax Shell", action="store_true")
 
     args = parser.parse_args()
 
-    result = ""
     if args.yacc_file:
-        result = yacc_file(args.yacc_file)
-        print(result)
+        print(yacc_file(args.yacc_file))
     elif args.lex_file:
-        result = lex_file(args.lex_file)
-        print(result)
-    elif args.data:
-        result = lex_data(args.data)
-        print(result)
+        print(lex_file(args.lex_file))
+    elif args.lex_data:
+        print(lex_data(args.lex_data))
+    elif args.yacc_data:
+        print(yacc_data(args.yacc_data))
     elif args.shell:
         yacc_shell()
     else:

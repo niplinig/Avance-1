@@ -25,26 +25,26 @@ class MyLexer(object):
 
 		# Control expression syntax
 		"case": "CASE", # Starts a case expression.
-		
+
 		# Control expressions
 		"if": "IF", # Used for if and modifier if statements.
 		"unless": "UNLESS", # Used for unless and modifier unless statements.
 		"then": "THEN", # Indicates the end of conditional blocks in control structures.
 		"elsif": "ELSIF", # An alternate condition for an if expression.
-		"else": "ELSE", # The unhandled condition in case, if and unless expressions. 
-		
+		"else": "ELSE", # The unhandled condition in case, if and unless expressions.
+
 		"for": "FOR", # A loop that is similar to using the each method.
 		"in": "IN", # Used to separate the iterable object and iterator variable in a for
 		"next": "NEXT", # Skips the rest of the block.
-		
+
 		"while": "WHILE", # Creates a loop that executes while the condition is true.
 		"do": "DO", # Starts a block.
 		"break": "BREAK",
 		"when": "WHEN", # A condition in a case expression.
 		"until": "UNTIL", # Creates a loop that executes until the condition is true
-		
+
 		# Boolean and Nil Literals
-		"true": "TRUE", # Boolean true. 
+		"true": "TRUE", # Boolean true.
 		"false": "FALSE", # Boolean false.
 		"nil": "NIL", # A false value usually indicating “no value” or “unknown”.
 
@@ -54,7 +54,7 @@ class MyLexer(object):
 		"not": "NOT", # Inverts the following boolean expression. Has a lower precedence than !
 
 		# Modules and classes syntax
-		"class": "CLASS", # Creates or opens a class. 
+		"class": "CLASS", # Creates or opens a class.
 
 		# Methods
 		"super": "SUPER", # Calls the current method in a superclass.
@@ -62,16 +62,16 @@ class MyLexer(object):
 		"new": "NEW",
 
 		# Method syntax
-		"def": "DEF", # Defines a method. 
+		"def": "DEF", # Defines a method.
 		"return": "RETURN", # Exits a method.
-		
+
 		# Exception handling
-		"retry": "RETRY", # Retries an exception block. 
+		"retry": "RETRY", # Retries an exception block.
 		"ensure": "ENSURE", # Starts a section of code that is always run when an exception is raised.
 
 		# Data structure
 		"array": "ARRAY", # An Array is an ordered, integer-indexed collection of objects, called elements.
-		"Set": "SET", # Set implements a collection of unordered values with no duplicates. 
+		"Set": "SET", # Set implements a collection of unordered values with no duplicates.
 		"Hash": "HASH", # A Hash maps each of its unique keys to a specific value.
 		"Matrix": "MATRIX", # The Matrix class represents a mathematical matrix.
 	}
@@ -104,7 +104,7 @@ class MyLexer(object):
 		"LOGIC_NOT", # !
 		"LOGIC_AND", # &&
 		"LOGIC_OR", # ||
-		
+
 		# Arithmetic Operators
 		"PLUS", # +
 		"MINUS", # -
@@ -138,7 +138,7 @@ class MyLexer(object):
 		"R_BRACE", # }
 		"L_BRACKET", # [
 		"R_BRACKET", # ]
-		
+
 		# Literals
 		"COMPLEX", # 1+1i
 		"RATIONAL", # 1/2r
@@ -151,7 +151,7 @@ class MyLexer(object):
 
 		# Comment
 		"LINE_COMMENT", # #...
-		
+
 	) + tuple(reserved.values())
 
 	# ----------------------------------
@@ -216,13 +216,12 @@ class MyLexer(object):
 	t_R_BRACKET = r"\]"
 
 	# Literals
-	t_COMPLEX = r"([0-9]*\.[0-9]+ri|[0-9]*\.[0-9]+ir)"
-	t_RATIONAL = r"[1-9]+/[1-9]+r"
-	t_FLOAT = r"([0-9]*\.[0-9]+|[0-9]*\.[0-9]e-?[1-9]+)"
+	t_FLOAT = r"[0-9]*\.[0-9]+"
 	t_INTEGER = r"[0-9]+"
 	t_STRING = r"(\'[^\']*\'|\"[^\"]*\")"
 
 	t_ignore  = ' \t'
+
 
 	# ----------------------------------
 	#
@@ -230,10 +229,9 @@ class MyLexer(object):
 	#
 	# ----------------------------------
 
-	def t_newline(self, t):
+	def t_NEW_LINE(self, t):
 		r"\n+"
 		t.lexer.lineno += len(t.value)
-  t.lexer.skip(1)
 
 	def t_LINE_COMMENT(self, t):
 		r"\#.*"
@@ -274,7 +272,7 @@ Lexical Analysis
 
 def lex_data(data):
     lexer = MyLexer()
-    return get_title().join(lexer.test(data))
+    return get_title() + f"{lexer.test(data)}"
 
 def lex_file(file_path):
     lexer = MyLexer()

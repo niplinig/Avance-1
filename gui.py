@@ -13,6 +13,7 @@ import customtkinter
 from customtkinter import filedialog
 from lexical import lex_data, lex_file
 from semantic import yacc_data, yacc_file
+from os import getcwd
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("dark-blue")
@@ -26,7 +27,7 @@ current_file, current_text = "", ""
 
 def open_new_file():
     global current_file, current_text
-    with open("new_file.txt", mode="w+", encoding="utf8") as new_file:
+    with open(f"{getcwd()}/new_file.txt", mode="w+", encoding="utf8") as new_file:
         root.title("new_file.txt")
         current_file = new_file
         current_text = code.delete("0.0", "end")
@@ -34,11 +35,10 @@ def open_new_file():
 
 def open_file():
     global current_file, current_text
-    text_file = filedialog.askopenfilename( 
-        initialdir="~/Downloads/",
-        title="Open Text File",
-        filetypes=(("Text Files", "*.txt"),),
-    )
+    text_file = filedialog.askopenfilename(
+    initialdir=f"{getcwd()}/",
+    title="Open Text File",
+    filetypes=(("Text Files", "*.txt"),),)
     code.delete("0.0", "end")  # Delete previous text
     with open(text_file, mode="r+", encoding="utf8") as text_file:
         current_file = text_file
@@ -50,7 +50,7 @@ def open_file():
 def save_file():
     global current_file, current_text
     if current_file:
-        with open(current_file.name, mode="w", encoding="utf8") as saved_file:
+        with open(current_file.name, mode="w+", encoding="utf8") as saved_file:
             current_file = saved_file
             current_text = code.get("0.0", "end")
             current_file.write(current_text)
@@ -61,7 +61,7 @@ def save_file():
 def save_as_file():
     global current_file, current_text
     text_file = filedialog.askopenfilename(
-        initialdir="~/Downloads/",
+        initialdir=f"{getcwd()}/",
         title="Open Text File",
         filetypes=(("Text Files", "*.txt"),),
     )

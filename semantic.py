@@ -21,339 +21,154 @@ from io import StringIO
 
 
 class MyYacc(object):
+    
     tokens = MyLexer.tokens
+
+    precednece = (
+        ('left', 'PLUS', 'MINUS'),
+        ('left', 'MULT', 'DIV'),
+    )
 
     start = "init"
 
     def p_init(self, p):
-        "init : statements"
-
+        "init : statement"
 
     def p_statement(self, p):
         """statement : assignment
+        | comparations
         | function
-        | control
-        | arithmetic
         """
 
-
-    def p_statements(self, p):
-        """statements : statement
-        | statement statements
+    def p_funcBody(self, p):
+        """funcBody : assignment
+        | comparations
         """
 
-
-    def p_ids(self, p):
-        """ids : ID
-        | ID COMMA ids
+    def p_funcBodys(self, p):
+        """funcBodys : 
         """
-
-
-    def p_literal(self, p):
-        """literal : STRING
-        | ID
-        | boolean
-        | numeric
-        | range
-        """
-
-
-    def p_literals(self, p):
-        """literals : literal
-        | literal COMMA literals
-        """
-
 
     def p_boolean(self, p):
         """boolean : TRUE
         | FALSE
         """
 
-
     def p_numeric(self, p):
-        """numeric : COMPLEX
-        | RATIONAL
-        | FLOAT
+        """numeric : FLOAT
         | INTEGER
         """
 
+    def p_literal(self, p):
+        """literal : STRING
+        | boolean
+        | numeric
+        """
 
-    def p_value(self, p):
-        """value : numeric
+    def p_ids(self, p):
+        """ids : ID
+        | ID COMMA ids
+        """
+
+    def p_nvalue(self, p): # numeric value
+        """nvalue : numeric
         | ID
         """
 
+    def p_value(self, p): # both numeric
+        """value : STRING
+        | numeric
+        | ID
+        """    
+
+    def p_arithOp(self, p):
+        """arithOp : PLUS
+        | MINUS
+        | EXPO
+        | MULT
+        | DIV
+        | MODULO
+        """
 
     def p_arithmetic(self, p):
-        """arithmetic : value PLUS value
-        | value PLUS arithmetic
-        | value MINUS value
-        | value MINUS arithmetic
-        | value EXPO value
-        | value EXPO arithmetic
-        | value MULT value
-        | value MULT arithmetic
-        | value DIV value
-        | value DIV arithmetic
-        | value MODULO value
-        | value MODULO arithmetic
+        """arithmetic : nvalue arithOp nvalue
+        | nvalue arithOp arithmetic
         """
-
-
-    def p_comparation(self, p):
-        """comparation : literal EQUAL literal
-        | ID EQUAL literal
-        | literal EQUAL ID
-        | ID EQUAL ID
-        | literal NOT_EQ literal
-        | ID NOT_EQ literal
-        | literal NOT_EQ ID
-        | ID NOT_EQ ID
-        | literal LT_OR_EQ literal
-        | ID LT_OR_EQ literal
-        | literal LT_OR_EQ ID
-        | ID LT_OR_EQ ID
-        | literal GT_OR_EQ literal
-        | ID GT_OR_EQ literal
-        | literal GT_OR_EQ ID
-        | ID GT_OR_EQ ID
-        | literal LESS_THAN literal
-        | ID LESS_THAN literal
-        | literal LESS_THAN ID
-        | ID LESS_THAN ID
-        | literal GREATER_THAN literal
-        | ID GREATER_THAN literal
-        | literal GREATER_THAN ID
-        | ID GREATER_THAN ID
-        """
-
-
-    def p_comparations(self, p):
-        """comparations : comparation AND comparation
-        | comparation LOGIC_AND comparation
-        | comparation AND comparations
-        | comparation LOGIC_AND comparations
-        | comparation OR comparation
-        | comparation LOGIC_OR comparation
-        | comparation OR comparations
-        | comparation LOGIC_OR comparations
-        | boolean AND boolean
-        | boolean LOGIC_AND boolean
-        | boolean OR boolean
-        | boolean LOGIC_OR boolean
-        """
-
 
     def p_assignment(self, p):
         """assignment : ID ASSIGN ID
         | ID ASSIGN NIL
-        | ID ASSIGN struc
         | ID ASSIGN literal
         | ID ASSIGN arithmetic
-        | ID ASSIGN call_method
-        | strucArray ASSIGN ID
-        | strucArray ASSIGN strucArray
         """
 
+    def p_assignOp(self, p):
+        """assignOp : ADD_ASSIGN
+        | SUBS_ASSIGN
+        | MULT_ASSIGN
+        | DIV_ASSIGN
+        | MOD_ASSIGN
+        """
 
     def p_assignment_operations(self, p):
-        """assignment : ID ADD_ASSIGN ID
-        | ID ADD_ASSIGN numeric
-        | ID SUBS_ASSIGN ID
-        | ID SUBS_ASSIGN numeric
-        | ID MULT_ASSIGN ID
-        | ID MULT_ASSIGN numeric
-        | ID DIV_ASSIGN ID
-        | ID DIV_ASSIGN numeric
-        | ID MOD_ASSIGN ID
-        | ID MOD_ASSIGN numeric
+        """assignment : ID assignOp value
+        """ 
+
+    def p_comparator(self, p):
+        """comparator : EQUAL
+        | NOT_EQ
+        | LT_OR_EQ
+        | GT_OR_EQ
+        | LESS_THAN
+        | GREATER_THAN
         """
 
+    def p_logicOp(self, p):
+        """logicOp : AND
+        | LOGIC_AND
+        | OR
+        | LOGIC_OR
+        """
+
+    def p_comparation(self, p):
+        """comparation : STRING comparator STRING
+        | nvalue comparator nvalue
+        """
+
+    def p_comparations(self, p):
+        """comparations : comparation
+        | comparation logicOp comparation
+        """    
 
     def p_function(self, p):
-        """function : DEF ID L_PAREN literals R_PAREN statements END
-        | DEF ID L_PAREN R_PAREN statements END
-        | DEF ID statements END
-        | DEF ID L_PAREN literals R_PAREN statements RETURN ID END
-        | DEF ID L_PAREN R_PAREN statements RETURN ID END
-        | DEF ID statements RETURN ID END
-        | DEF ID L_PAREN literals R_PAREN statements RETURN literal END
-        | DEF ID L_PAREN R_PAREN statements RETURN literal END
-        | DEF ID statements RETURN literal END
+        """function : DEF ID L_PAREN ids R_PAREN funcBody END
+        | DEF ID L_PAREN R_PAREN funcBody END
+        | DEF ID funcBody END
+        | DEF ID L_PAREN ids R_PAREN funcBody RETURN ID END
+        | DEF ID L_PAREN R_PAREN funcBody RETURN ID END
+        | DEF ID funcBody RETURN ID END
+        | DEF ID L_PAREN ids R_PAREN funcBody RETURN literal END
+        | DEF ID L_PAREN R_PAREN funcBody RETURN literal END
+        | DEF ID funcBody RETURN literal END
         """
-
-    def p_callMethod(self, p):
-        """callMethod : ID PERIOD ID
-        | ID PERIOD ID L_PAREN literals R_PAREN
-        | ID PERIOD ID L_PAREN R_PAREN
-        """
-
-    def p_else(self, p):
-        """else : ELSE boolean statements
-        | ELSE comparation statements
-        | ELSE comparations statements
-        """
-
-
-    def p_elsif(self, p):
-        """elsif : ELSIF boolean statements
-        | ELSIF comparation statements
-        | ELSIF comparations statements
-        """
-
-
-    def p_elses(self, p):
-        """elses : else
-        | elsif elses
-        """
-
-
-    def p_contol_if(self, p):
-        """control : IF boolean statements END
-        | IF comparation statements END
-        | IF comparations statements END
-        | IF boolean statements elses END
-        | IF comparation statements elses END
-        | IF comparations statements elses END
-        """
-
-
-    def p_control_unless(self, p):
-        """control : UNLESS boolean COLON statements END
-        | UNLESS comparation COLON statements END
-        | UNLESS comparations COLON statements END
-        | UNLESS boolean statements elses END
-        | UNLESS comparation statements elses END
-        | UNLESS comparations statements elses END
-        """
-
-
-    def p_when(self, p):
-        """when : WHEN literal
-        | WHEN literal THEN
-        | WHEN comparation
-        | WHEN comparations
-        """
-
-
-    def p_whens(self, p):
-        """whens : when
-        | when whens
-        """
-
-
-    def p_control_case(self, p):
-        """control : CASE ID whens else END
-        | CASE ID whens END
-        """
-
-
-    def p_control_while(self, p):
-        """control : WHILE boolean DO statements END
-        | WHILE comparation DO statements END
-        | WHILE comparations DO statements END
-        """
-    
-    def p_control_for(self, p):
-        """control : FOR ID IN range DO statements END
-        | FOR ID IN range statements END
-        """
-    
-
-
-    def p_element(self, p):
-        """element : ID
-        | STRING
-        | boolean
-        | numeric
-        | range
-        """
-
-
-    def p_elements(self, p):
-        """elements : element
-        | element COMMA elements
-        """
-
-
-    def p_strucArray(self, p):
-        """strucArray : ID L_BRACKET ID R_BRACKET
-        | ID L_BRACKET arithmetic R_BRACKET
-        """
-
-    def p_array(self, p):
-        """array : L_BRACKET literals R_BRACKET
-        | L_BRACKET ids R_BRACKET
-        | L_BRACKET elements R_BRACKET
-        """
-
-
-    def p_arrays(self, p):
-        """arrays : array
-        | array COMMA arrays
-        """
-
-
-    def p_struc(self, p):
-        """struc : strucMatrix
-        | strucSet
-        | strucHash
-        | strucArray
-        """
-
-
-    def p_strucMatrix(self, p):
-        "strucMatrix : MATRIX L_BRACKET arrays R_BRACKET"
-
-
-    def p_strucSet(self, p):
-        """strucSet : SET PERIOD NEW
-        | SET PERIOD NEW L_PAREN R_PAREN
-        | SET PERIOD NEW L_PAREN array R_PAREN
-        | SET array
-        """
-
-
-    def p_strucHash(self, p):
-        """strucHash : HASH PERIOD NEW
-        | HASH PERIOD NEW L_BRACE R_BRACE
-        | HASH PERIOD NEW L_BRACE hashelems R_BRACE
-        | HASH array
-        """
-
-
-    def p_hashelem_rocket(self, p):
-        """hashelem : COLON ID RW_DOUBLE_ARROW literal
-        | ID COLON literal
-        | STRING COLON literal
-        """
-
-
-    def p_hashelems(self, p):
-        """hashelems : hashelem COMMA hashelem
-        | hashelem COMMA hashelems
-        """
-
-
-    def p_range(self, p):
-        """range : L_PAREN INTEGER ELLIPSIS INTEGER R_PAREN
-        | L_PAREN INTEGER DOUBLE_PERIOD INTEGER R_PAREN
-        | INTEGER ELLIPSIS INTEGER
-        | INTEGER DOUBLE_PERIOD INTEGER
-        | INTEGER ELLIPSIS L_PAREN callMethod R_PAREN
-        | INTEGER ELLIPSIS L_PAREN ID PERIOD ID R_PAREN
-        | L_PAREN STRING ELLIPSIS STRING
-        | L_PAREN STRING DOUBLE_PERIOD STRING
-        | STRING ELLIPSIS STRING
-        | STRING DOUBLE_PERIOD STRING
-        """
-
 
     def p_error(self, p):
-        if p:
-            print(f"{' '*(18 - len(p.type))}{p.type}{' '*(18 - len(p.type))}{' '*(13 - len(str(p.lineno)))}{p.lineno}{' '*(13 - len(str(p.lineno)))}{' '*(10 - len(str(p.lexpos)))}{p.lexpos}{' '*(10 - len(str(p.lexpos)))}")
+        if not p:
+            print("Invalid Syntax End of File (EOF)")
+            return
+
+        if p is None or p.type == 'END':
+            next
         else:
-            print("Invalid Syntax EOF")
+            print(f"{' '*(18 - len(p.type))}{p.type}{' '*(18 - len(p.type))}{' '*(13 - len(str(p.lineno)))}{p.lineno}{' '*(13 - len(str(p.lineno)))}{' '*(10 - len(str(p.lexpos)))}{p.lexpos}{' '*(10 - len(str(p.lexpos)))}")
+             
+        while True:
+            tok = self.parser.token()
+            if tok is None or tok.type == 'END':
+                break
+            print(f"{' '*(18 - len(tok.type))}{tok.type}{' '*(18 - len(tok.type))}{' '*(13 - len(str(tok.lineno)))}{tok.lineno}{' '*(13 - len(str(tok.lineno)))}{' '*(10 - len(str(tok.lexpos)))}{tok.lexpos}{' '*(10 - len(str(tok.lexpos)))}")
+        self.parser.restart()
+            
 
     def __init__(self):
         self.lexer = MyLexer()
@@ -377,11 +192,7 @@ Syntactic Analysis
 
 def yacc_data(data):
     parser = MyYacc()
-    printing_data = get_title()
-    result = parser.test(data)
-    if result is not None:
-        printing_data += f"{result}"
-    return printing_data
+    return get_title() + f"{parser.test(data)}"
 
 
 def yacc_shell():
@@ -404,12 +215,5 @@ def yacc_shell():
 
 def yacc_file(file_path):
     parser = MyYacc()
-
-    printing_data = get_title()
     with open(file_path, mode="r", encoding="utf8") as data:
-        data_lines = data.readlines()
-        for line in data_lines:
-            result = parser.test(line)
-            if result is not None:
-                printing_data += f"{result}"
-    return printing_data
+        return get_title() + f"{parser.test(data.read())}"
