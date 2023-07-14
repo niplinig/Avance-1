@@ -70,10 +70,14 @@ class MyLexer(object):
 		"ensure": "ENSURE", # Starts a section of code that is always run when an exception is raised.
 
 		# Data structure
-		"array": "ARRAY", # An Array is an ordered, integer-indexed collection of objects, called elements.
 		"Set": "SET", # Set implements a collection of unordered values with no duplicates.
 		"Hash": "HASH", # A Hash maps each of its unique keys to a specific value.
 		"Matrix": "MATRIX", # The Matrix class represents a mathematical matrix.
+
+        # Line IO
+        "puts": "PUTS", # Writes objects to the stream.
+        "print": "PRINT", # Writes to the stream.
+        "gets": "GETS", # Returns the next line from the current file in ARGF.
 	}
 
 	# ----------------------------------
