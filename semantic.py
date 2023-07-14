@@ -45,6 +45,7 @@ class MyYacc(object):
         | classMethod
         | classField
         | struc
+        | indexArray
         """
 
     def p_statements(self, p):
@@ -61,6 +62,7 @@ class MyYacc(object):
         | classMethod
         | classField
         | struc
+        | indexArray
         """
 
     def p_funcBodys(self, p):
@@ -71,11 +73,14 @@ class MyYacc(object):
     def p_condiBlock(self, p):
         """condiBlock : assignment
         | comparations
+        | conditional
         | loop
         | print
         | classMethod
         | classField
         | struc
+        | indexArray
+        | BREAK
         """
 
     def p_condiBlocks(self, p):
@@ -88,9 +93,12 @@ class MyYacc(object):
         | comparations
         | conditional
         | print
+        | loop
         | classMethod
         | classField
         | struc
+        | indexArray
+        | BREAK
         """
 
     def p_loopBlocks(self, p):
@@ -120,6 +128,7 @@ class MyYacc(object):
         | STRING pointOp STRING
         | L_PAREN ID pointOp ID R_PAREN
         | ID pointOp ID
+        | INTEGER pointOp L_PAREN classField R_PAREN
         """
 
     def p_literal(self, p):
@@ -169,6 +178,8 @@ class MyYacc(object):
         | ID ASSIGN literal
         | ID ASSIGN arithmetic
         | ID ASSIGN struc
+        | indexArray ASSIGN value
+        | indexArray ASSIGN indexArray
         """
 
     def p_assignOp(self, p):
@@ -203,6 +214,7 @@ class MyYacc(object):
         """comparation : STRING comparator STRING
         | numeric comparator numeric
         | ID comparator value
+        | indexArray comparator indexArray
         """
 
     def p_comparations(self, p):
@@ -302,10 +314,11 @@ class MyYacc(object):
         | strucMatrix
         """
 
-    # def p_indexArray(self, p):
-    #     """indexArray : ID L_BRACKET ID R_BRACKET
-    #     | ID L_BRACKET arithmetic R_BRACKET
-    #     """
+    def p_indexArray(self, p):
+        """indexArray : ID L_BRACKET ID R_BRACKET
+        | ID L_BRACKET INTEGER R_BRACKET
+        | ID L_BRACKET arithmetic R_BRACKET
+        """
 
     def p_strucArray(self, p):
         """strucArray : L_BRACKET values R_BRACKET
@@ -326,7 +339,23 @@ class MyYacc(object):
     def p_strucMatrix(self, p):
         "strucMatrix : MATRIX L_BRACKET arrays R_BRACKET"
 
+    # def p_hashElem(self, p):
+    #     """hashElem : COLON ID RW_DOBULE_ARROW literal
+    #     | ID COLON literal
+    #     | STRING COLON literal
+    #     """
 
+    # def p_hashElems(self, p):
+    #     """hashElems : hashElem COMMA hashElem
+    #     | hashElem COMMA hashElems
+    #     """
+
+    # def p_strucHash(self, p):
+    #     """strucHash : HASH PERIOD NEW
+    #     | HASH PERIOD NEW L_BRACE R_BRACE
+    #     | HASH PERIOD NEW L_BRACE hashElems R_BRACE
+    #     | HASH strucArray
+    #     """
 
     def p_error(self, p):
         if not p:
