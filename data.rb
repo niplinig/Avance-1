@@ -53,7 +53,7 @@ end
 nombre= 'Xavier'
 Apellido= "Pauta"
 numeros= [1,2,3,4 ,5 ]
-datos= ={ "Nombre"=>'Xavier Pauta' , edad: 21}
+datos= { "Nombre"=>'Xavier Pauta' , edad: 21}
 
 student1 = {
   name: "Juan",

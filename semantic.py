@@ -28,6 +28,8 @@ class MyYacc(object):
         ('left', 'PLUS', 'MINUS'),
         ('left', 'MULT', 'DIV'),
         ('left', 'L_PAREN', 'R_PAREN'),
+        ('left', 'L_BRACKET', 'R_BRACKET'),
+        ('left', 'L_BRACE', 'R_BRACE'),
     )
 
     start = "init"
@@ -178,6 +180,7 @@ class MyYacc(object):
         | ID ASSIGN literal
         | ID ASSIGN arithmetic
         | ID ASSIGN struc
+        | ID ASSIGN classField
         | indexArray ASSIGN value
         | indexArray ASSIGN indexArray
         """
@@ -312,6 +315,7 @@ class MyYacc(object):
         """struc : strucArray
         | strucSet
         | strucMatrix
+        | strucHash
         """
 
     def p_indexArray(self, p):
@@ -339,23 +343,28 @@ class MyYacc(object):
     def p_strucMatrix(self, p):
         "strucMatrix : MATRIX L_BRACKET arrays R_BRACKET"
 
-    # def p_hashElem(self, p):
-    #     """hashElem : COLON ID RW_DOBULE_ARROW literal
-    #     | ID COLON literal
-    #     | STRING COLON literal
-    #     """
 
-    # def p_hashElems(self, p):
-    #     """hashElems : hashElem COMMA hashElem
-    #     | hashElem COMMA hashElems
-    #     """
+    def p_hashElem(self, p):
+        """hashElem : COLON ID RW_DOUBLE_ARROW literal
+        | ID RW_DOUBLE_ARROW literal
+        | ID COLON literal
+        | STRING COLON literal
+        | STRING RW_DOUBLE_ARROW literal
+        """
 
-    # def p_strucHash(self, p):
-    #     """strucHash : HASH PERIOD NEW
-    #     | HASH PERIOD NEW L_BRACE R_BRACE
-    #     | HASH PERIOD NEW L_BRACE hashElems R_BRACE
-    #     | HASH strucArray
-    #     """
+    def p_hashElems(self, p):
+        """hashElems : hashElem
+        | hashElem COMMA hashElems
+        """
+
+    def p_strucHash(self, p):
+        """strucHash : L_BRACE R_BRACE
+        | L_BRACE hashElems R_BRACE
+        | HASH PERIOD NEW
+        | HASH PERIOD NEW L_BRACE R_BRACE
+        | HASH PERIOD NEW L_BRACE hashElems R_BRACE
+        | HASH strucArray
+        """
 
     def p_error(self, p):
         if not p:
